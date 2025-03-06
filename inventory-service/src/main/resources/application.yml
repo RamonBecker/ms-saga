@@ -1,7 +1,16 @@
 server:
   port: 8092
 
-  spring:
+spring:
+    kafka:
+      bootstrap-servers: ${KAFKA_BROKER:localhost}:${KAFKA_PORT:9092}
+      topic:
+        orchestrator: orchestrator
+        product-validation-success: product-validation-success
+        product-validation-fail: product-validation-fail
+      consumer:
+        group-id: ${KAFKA_GROUP_ID:product-validation-group}
+        auto-offset-reset: latest
 
     datasource:
       url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5434}/${DB_NAME:inventory-db}
@@ -12,7 +21,7 @@ server:
     jpa:
       hibernate:
         ddl-auto: create-drop
-        properties:
-          hibernate:
-            dialect: org.hibernate.dialect.PostgreSQLDialect
       show-sql: true
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.PostgreSQLDialect
