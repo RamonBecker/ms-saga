@@ -1,4 +1,4 @@
-package com.example.orchestrator.service.shared.constants;
+package com.example.orchestrator.service.infrastructure.constants;
 
 
 import lombok.AllArgsConstructor;
@@ -18,9 +18,7 @@ public enum ETopics {
     PAYMENT_FAIL("payment-fail"),
     INVENTORY_SUCCESS("inventory-success"),
     INVENTORY_FAIL("inventory-fail"),
-    NOTIFY_ENDING("notify-ending"),
-    ;
+    NOTIFY_ENDING("notify-ending");
 
-
-    private String topic;
+    private final String topic;
 }
