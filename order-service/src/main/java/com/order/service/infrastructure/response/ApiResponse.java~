@@ -1,0 +1,5 @@
+package com.order.service.infrastructure.response;
+
+public record ApiResponse(Boolean success, String message) {
+
+}

@@ -1,7 +1,7 @@
-package com.payment.service.infrastructure.response;
+package com.order.service.infrastructure.response;
 
 
-import com.payment.service.infrastructure.shared.constants.SagaStatus;
+import com.order.service.infrastructure.shared.constants.SagaStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

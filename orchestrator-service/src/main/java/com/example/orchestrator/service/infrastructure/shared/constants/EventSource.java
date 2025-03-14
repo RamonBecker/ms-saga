@@ -1,4 +1,4 @@
-package com.example.orchestrator.service.infrastructure.constants;
+package com.example.orchestrator.service.infrastructure.shared.constants;
 
 
 

@@ -1,8 +1,8 @@
 package com.example.orchestrator.service.infrastructure.responses;
 
 
-import com.example.orchestrator.service.infrastructure.constants.EventSource;
-import com.example.orchestrator.service.infrastructure.constants.SagaStatus;
+import com.example.orchestrator.service.infrastructure.shared.constants.EventSource;
+import com.example.orchestrator.service.infrastructure.shared.constants.SagaStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

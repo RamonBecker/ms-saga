@@ -1,7 +1,7 @@
 package com.example.inventory.service.infrastructure.response;
 
 
-import com.example.inventory.service.infrastructure.constants.SagaStatus;
+import com.example.inventory.service.infrastructure.shared.constants.SagaStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

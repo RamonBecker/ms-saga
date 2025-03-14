@@ -1,7 +1,7 @@
 package com.payment.service.infrastructure.response;
 
 
-import com.payment.service.infrastructure.constants.SagaStatus;
+import com.payment.service.infrastructure.shared.constants.SagaStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

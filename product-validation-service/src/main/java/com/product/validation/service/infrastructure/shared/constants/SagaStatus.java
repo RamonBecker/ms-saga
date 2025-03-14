@@ -1,4 +1,4 @@
-package com.example.inventory.service.infrastructure.constants;
+package com.product.validation.service.infrastructure.shared.constants;
 
 public enum SagaStatus {
 

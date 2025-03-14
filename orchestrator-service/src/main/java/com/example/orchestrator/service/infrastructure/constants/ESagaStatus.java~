@@ -1,9 +1,0 @@
-package com.example.orchestrator.service.infrastructure.constants;
-
-public enum ESagaStatus {
-
-    SUCCESS,
-    FAIL,
-    ROLLBACK_PENDING,
-    
-}

@@ -1,4 +1,4 @@
-package com.payment.service.infrastructure.constants;
+package com.order.service.infrastructure.shared.constants;
 
 public enum SagaStatus {
 
