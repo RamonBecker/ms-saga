@@ -17,7 +17,7 @@ import org.springframework.kafka.core.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.example.orchestrator.service.infrastructure.constants.ETopics.*;
+import static com.example.orchestrator.service.infrastructure.constants.Topics.*;
 
 @EnableKafka
 @Configuration
