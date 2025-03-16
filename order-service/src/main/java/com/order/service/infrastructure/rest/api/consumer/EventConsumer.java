@@ -2,7 +2,7 @@ package com.order.service.infrastructure.rest.api.consumer;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.order.service.infrastructure.response.EventResponse;
+import com.order.service.infrastructure.data.db.entities.Event;
 import com.order.service.infrastructure.shared.JsonSerializer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -25,7 +25,7 @@ public class EventConsumer {
     )
     public void notifyEndingEvent(String payload) throws JsonProcessingException {
         log.info("Received ending notification event {} from notify-ending topic ", payload);
-        var event = jsonSerializer.fromJson(payload, EventResponse.class);
+        var event = jsonSerializer.fromJson(payload, Event.class);
         log.info(event.toString());
     }
 

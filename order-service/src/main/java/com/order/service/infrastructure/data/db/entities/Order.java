@@ -1,9 +1,11 @@
-package com.order.service.infrastructure.response;
+package com.order.service.infrastructure.data.db.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,10 +14,12 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderResponse {
+@Document(collection = "order")
+public class Order {
 
+    @Id
     private String id;
-    private List<OrderProductResponse> products;
+    private List<OrderProduct> products;
     private LocalDateTime createdAt;
     private String transactionId;
     private double totalAmount;

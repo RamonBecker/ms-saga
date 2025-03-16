@@ -1,4 +1,4 @@
-package com.order.service.infrastructure.response;
+package com.order.service.infrastructure.data.db.entities;
 
 
 import com.order.service.infrastructure.shared.constants.SagaStatus;
@@ -8,21 +8,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class EventResponse {
+public class EventHistory {
 
-
-    private String id;
-    private String transactionId;
-    private String orderId;
-    private OrderResponse order;
     private String source;
     private SagaStatus status;
-    private List<EventHistoryResponse> histories;
+    private String message;
     private LocalDateTime createdAt;
+
 }

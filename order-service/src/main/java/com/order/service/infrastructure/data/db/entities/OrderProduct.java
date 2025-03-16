@@ -1,4 +1,4 @@
-package com.order.service.infrastructure.response;
+package com.order.service.infrastructure.data.db.entities;
 
 
 import lombok.AllArgsConstructor;
@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderProductResponse {
+public class OrderProduct {
 
-    private ProductResponse product;
+    private Product product;
     private int quantity;
 
 }
