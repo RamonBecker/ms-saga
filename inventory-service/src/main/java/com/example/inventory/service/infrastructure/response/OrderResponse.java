@@ -15,7 +15,7 @@ import java.util.List;
 public class OrderResponse {
 
     private String id;
-    private List<OrderProductResponse> ordersProducts;
+    private List<OrderProductResponse> products;
     private LocalDateTime createdAt;
     private String transactionId;
     private double totalAmount;

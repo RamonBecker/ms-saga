@@ -3,6 +3,7 @@ package com.example.inventory.service.infrastructure.converters;
 import com.example.inventory.service.infrastructure.shared.JsonSerializer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 public class EventSerializer implements JsonSerializer {
 
@@ -10,6 +11,7 @@ public class EventSerializer implements JsonSerializer {
 
     public EventSerializer(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
+        this.objectMapper.registerModule(new JavaTimeModule());
     }
 
     @Override

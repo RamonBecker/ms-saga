@@ -20,9 +20,9 @@ public class EventResponse {
     private String id;
     private String transactionId;
     private String orderId;
+    private OrderResponse order;
     private String source;
     private SagaStatus status;
-    private LocalDateTime createdAt;
-    private OrderResponse order;
     private List<EventHistoryResponse> histories;
+    private LocalDateTime createdAt;
 }

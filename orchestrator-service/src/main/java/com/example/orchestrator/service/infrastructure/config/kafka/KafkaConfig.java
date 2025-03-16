@@ -28,19 +28,18 @@ import static com.example.orchestrator.service.infrastructure.shared.constants.T
 import static com.example.orchestrator.service.infrastructure.shared.constants.Topics.FINISH_FAIL;
 
 
-import static com.example.orchestrator.service.infrastructure.shared.constants.TopicKafkaConfig.BOOTSTRAP_SERVERS;
-import static com.example.orchestrator.service.infrastructure.shared.constants.TopicKafkaConfig.GROUP_ID;
-import static com.example.orchestrator.service.infrastructure.shared.constants.TopicKafkaConfig.AUTO_OFFSET_RESET;
-
 @EnableKafka
 @Configuration
-@RequiredArgsConstructor
 public class KafkaConfig {
 
 
     private static final Integer PARTITION_COUNT = 1;
     private static final Integer REPLICA_COUNT = 1;
+    private final KafkaProperties kafkaProperties;
 
+    public KafkaConfig(KafkaProperties kafkaProperties) {
+        this.kafkaProperties = kafkaProperties;
+    }
 
     @Bean
     public ConsumerFactory<String, String> consumerFactory() {
@@ -52,11 +51,11 @@ public class KafkaConfig {
 
         var defaultProperties = new HashMap<String, Object>();
 
-        defaultProperties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVERS);
-        defaultProperties.put(ConsumerConfig.GROUP_ID_CONFIG, GROUP_ID);
+        defaultProperties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getBootstrapServers());
+        defaultProperties.put(ConsumerConfig.GROUP_ID_CONFIG, kafkaProperties.getConsumer().getGroupId());
         defaultProperties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         defaultProperties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        defaultProperties.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, AUTO_OFFSET_RESET);
+        defaultProperties.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, kafkaProperties.getConsumer().getAutoOffsetReset());
 
         return defaultProperties;
     }
@@ -71,7 +70,7 @@ public class KafkaConfig {
 
         var defaultProperties = new HashMap<String, Object>();
 
-        defaultProperties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVERS);
+        defaultProperties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getBootstrapServers());
         defaultProperties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         defaultProperties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class); //default_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
 

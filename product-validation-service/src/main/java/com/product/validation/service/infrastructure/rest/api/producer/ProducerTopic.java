@@ -1,17 +1,18 @@
-package com.example.orchestrator.service.infrastructure.rest.api.producer;
+package com.product.validation.service.infrastructure.rest.api.producer;
 
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
+
 @Slf4j
 @Component
-public class SagaOrchestratorProducer {
+public class ProducerTopic {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
 
-    public SagaOrchestratorProducer(KafkaTemplate<String, String> kafkaTemplate) {
+    public ProducerTopic(KafkaTemplate<String, String> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 

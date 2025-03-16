@@ -1,8 +1,7 @@
 package com.example.orchestrator.service.infrastructure.responses;
 
 
-import com.example.orchestrator.service.infrastructure.shared.constants.EventSource;
-import com.example.orchestrator.service.infrastructure.shared.constants.SagaStatus;
+import com.order.service.infrastructure.shared.constants.SagaStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,10 +15,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class EventHistoryResponse {
 
-    private EventSource source;
+    private String source;
     private SagaStatus status;
     private String message;
     private LocalDateTime createdAt;
-
 
 }

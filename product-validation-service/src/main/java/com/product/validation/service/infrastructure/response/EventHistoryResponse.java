@@ -1,7 +1,7 @@
 package com.product.validation.service.infrastructure.response;
 
 
-import com.product.validation.service.infrastructure.shared.constants.SagaStatus;
+import com.order.service.infrastructure.shared.constants.SagaStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

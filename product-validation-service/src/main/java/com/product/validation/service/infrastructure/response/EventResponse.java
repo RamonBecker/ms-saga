@@ -1,7 +1,7 @@
 package com.product.validation.service.infrastructure.response;
 
 
-import com.product.validation.service.infrastructure.shared.constants.SagaStatus;
+import com.order.service.infrastructure.shared.constants.SagaStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,9 +20,9 @@ public class EventResponse {
     private String id;
     private String transactionId;
     private String orderId;
+    private OrderResponse order;
     private String source;
     private SagaStatus status;
-    private LocalDateTime createdAt;
-    private OrderResponse order;
     private List<EventHistoryResponse> histories;
+    private LocalDateTime createdAt;
 }

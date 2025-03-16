@@ -1,9 +1,7 @@
 package com.example.orchestrator.service.infrastructure.responses;
 
 
-
-import com.example.orchestrator.service.infrastructure.shared.constants.EventSource;
-import com.example.orchestrator.service.infrastructure.shared.constants.SagaStatus;
+import com.order.service.infrastructure.shared.constants.SagaStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,9 +20,9 @@ public class EventResponse {
     private String id;
     private String transactionId;
     private String orderId;
-    private EventSource source;
-    private SagaStatus status;
-    private LocalDateTime createdAt;
     private OrderResponse order;
+    private String source;
+    private SagaStatus status;
     private List<EventHistoryResponse> histories;
+    private LocalDateTime createdAt;
 }

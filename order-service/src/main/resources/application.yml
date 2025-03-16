@@ -6,7 +6,7 @@ spring:
   kafka:
     bootstrap-servers: ${KAFKA_BROKER:localhost}:${KAFKA_PORT:9092}
     topic:
-      start-saga: start-saga
+      product-validation-start: product-validation-start
       notify-ending: notify-ending
     consumer:
       group-id: ${KAFKA_GROUP_ID:order-group}
