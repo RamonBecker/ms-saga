@@ -2,7 +2,7 @@ package com.order.service.infrastructure.data.db.repositories.impl;
 
 import com.order.service.core.domain.Event;
 import com.order.service.core.ports.EventServiceRepositoryPort;
-import com.order.service.infrastructure.data.db.converters.EventConverter;
+import com.order.service.infrastructure.data.db.entities.EventEntity;
 import com.order.service.infrastructure.data.db.repositories.MongoEventRepository;
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,33 +14,29 @@ import java.util.Optional;
 public class EventService implements EventServiceRepositoryPort {
 
     private final MongoEventRepository repository;
-    private final EventConverter eventConverter;
 
-    public EventService(MongoEventRepository repository, EventConverter eventConverter) {
+    public EventService(MongoEventRepository repository) {
         this.repository = repository;
-        this.eventConverter = eventConverter;
     }
 
     @Override
     public Event save(Event event) {
-        return eventConverter.eventEntityToEvent(repository.save(eventConverter.eventToEventEntity(event)));
+        return Event.from(repository.save(EventEntity.from(event)));
     }
 
     @Override
     public List<Event> getAll() {
-
-        return eventConverter.eventEntitiesToEvents(repository.findAllByOrderByCreatedAtDesc());
+        return repository.findAllByOrderByCreatedAtDesc().stream().map(Event::from).toList();
     }
 
     @Override
     public Optional<Event> findByTransactionId(String transactionId) {
-        return repository.findTop1ByTransactionIdOrderByCreatedAtDesc(transactionId)
-                .map(eventConverter::eventEntityToEvent);
+        return repository.findTop1ByTransactionIdOrderByCreatedAtDesc(transactionId).map(Event::from);
     }
 
     @Override
     public Optional<Event> findByOrderId(String orderId) {
-        return repository.findTop1ByOrderIdOrderByCreatedAtDesc(orderId).map(eventConverter::eventEntityToEvent);
+        return repository.findTop1ByOrderIdOrderByCreatedAtDesc(orderId).map(Event::from);
     }
 
     public void notifyEnding(Event event) {
@@ -49,5 +45,4 @@ public class EventService implements EventServiceRepositoryPort {
         save(event);
         log.info("Order {} with saga notified! TransactionId: {}", event.getOrderId(), event.getTransactionId());
     }
-
 }

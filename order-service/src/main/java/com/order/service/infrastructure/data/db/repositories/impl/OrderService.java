@@ -42,7 +42,7 @@ public class OrderService implements OrderServiceRepositoryPort {
     }
 
     private Event createPayload(Order order) {
-        return eventService.save(new EventEntity().fromThis(order));
+        return eventService.save(new EventEntity().setOrder(order));
     }
 
 }

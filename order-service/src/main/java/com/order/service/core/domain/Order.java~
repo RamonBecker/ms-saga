@@ -22,7 +22,7 @@ public class Order implements Serializable {
     private String transactionId;
     private double totalAmount;
     private int totalItems;
-
+    
     public static List<OrderProduct> toOrdersProducts(List<OrderProductEntity> products) {
         return products.stream().map(OrderProduct::from).toList();
     }

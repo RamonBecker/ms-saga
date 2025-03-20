@@ -29,4 +29,8 @@ public class OrderEntity implements Serializable {
     private double totalAmount;
     private int totalItems;
 
+    public static List<OrderProductEntity> toOrdersProductsEntities(List<OrderProduct> products) {
+        return products.stream().map(OrderProductEntity::from).toList();
+    }
+
 }
