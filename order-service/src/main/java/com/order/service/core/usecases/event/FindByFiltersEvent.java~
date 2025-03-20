@@ -1,0 +1,32 @@
+package com.order.service.core.usecases.event;
+
+import com.order.service.core.domain.Event;
+import com.order.service.core.ports.EventServiceRepositoryPort;
+import com.order.service.core.usecases.event.exception.InvalidIdEventException;
+
+import java.util.List;
+
+public class FindByFiltersEvent {
+
+
+    private final EventServiceRepositoryPort repository;
+
+    public FindByFiltersEvent(EventServiceRepositoryPort repository) {
+        this.repository = repository;
+    }
+
+    public List<Event> execute(Event event) {
+
+
+
+
+
+        return null;
+
+    }
+
+    private void validateEmptyFilters(Event event) {
+        if(event.getOrderId() == null && event.getTransactionId() == null)
+            throw new InvalidIdEventException("OrderID or TransactionID must be informed.");
+    }
+}

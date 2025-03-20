@@ -1,4 +1,4 @@
-package com.order.service.infrastructure.data.db.entities;
+package com.order.service.core.domain;
 
 
 import com.order.service.infrastructure.shared.constants.SagaStatus;

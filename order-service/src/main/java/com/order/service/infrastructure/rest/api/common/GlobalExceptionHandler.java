@@ -1,7 +1,7 @@
 package com.order.service.infrastructure.rest.api.common;
 
 
-import com.order.service.infrastructure.response.ApiResponse;
+import com.order.service.infrastructure.rest.api.responses.ApiResponse;
 import com.order.service.infrastructure.shared.exception.ValidationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

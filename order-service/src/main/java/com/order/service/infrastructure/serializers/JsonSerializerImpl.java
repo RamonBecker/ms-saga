@@ -1,4 +1,4 @@
-package com.order.service.infrastructure.converters;
+package com.order.service.infrastructure.serializers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -7,11 +7,11 @@ import com.order.service.infrastructure.shared.JsonSerializer;
 import org.springframework.stereotype.Component;
 
 @Component
-public class EventSerializer implements JsonSerializer {
+public class JsonSerializerImpl implements JsonSerializer {
 
     private final ObjectMapper objectMapper;
 
-    public EventSerializer(ObjectMapper objectMapper) {
+    public JsonSerializerImpl(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
         this.objectMapper.registerModule(new JavaTimeModule());
     }

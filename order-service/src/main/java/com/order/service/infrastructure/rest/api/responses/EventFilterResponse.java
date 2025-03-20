@@ -1,4 +1,4 @@
-package com.order.service.infrastructure.response;
+package com.order.service.infrastructure.rest.api.responses;
 
 
 import lombok.AllArgsConstructor;
