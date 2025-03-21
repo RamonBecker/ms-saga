@@ -1,21 +1,23 @@
 package com.order.service.infrastructure.data.db.repositories.impl;
 
 import com.order.service.core.domain.Event;
-import com.order.service.core.ports.EventServiceRepositoryPort;
+import com.order.service.core.ports.EventRepositoryPort;
 import com.order.service.infrastructure.data.db.entities.EventEntity;
 import com.order.service.infrastructure.data.db.repositories.MongoEventRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 @Slf4j
-public class EventService implements EventServiceRepositoryPort {
+@Repository
+public class EventRepository implements EventRepositoryPort {
 
-    private final MongoEventRepository repository;
+    private MongoEventRepository repository;
 
-    public EventService(MongoEventRepository repository) {
+    public EventRepository(MongoEventRepository repository) {
         this.repository = repository;
     }
 
@@ -26,6 +28,9 @@ public class EventService implements EventServiceRepositoryPort {
 
     @Override
     public List<Event> getAll() {
+
+        var t = repository.findAllByOrderByCreatedAtDesc();
+
         return repository.findAllByOrderByCreatedAtDesc().stream().map(Event::from).toList();
     }
 

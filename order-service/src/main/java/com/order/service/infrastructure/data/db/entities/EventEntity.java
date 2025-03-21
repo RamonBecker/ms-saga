@@ -13,6 +13,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,7 +30,7 @@ public class EventEntity {
     private String orderId;
     private OrderEntity order;
     private String source;
-    private SagaStatus status;
+    private String status;
     private List<EventHistoryEntity> histories;
     private LocalDateTime createdAt;
 
@@ -52,11 +53,14 @@ public class EventEntity {
                 .orderId(event.getOrderId())
                 .source(event.getSource())
                 .histories(EventEntity.toHistoriesEntities(event.getHistories()))
-                .status(SagaStatus.valueOf(event.getStatus()))
+                .status(event.getStatus())
                 .createdAt(event.getCreatedAt()).build();
     }
 
     public static List<EventHistoryEntity> toHistoriesEntities(List<EventHistory> histories) {
+
+        if (histories == null) return new ArrayList<>();
+
         return histories.stream()
                 .map(EventHistoryEntity::from)
                 .collect(Collectors.toList());

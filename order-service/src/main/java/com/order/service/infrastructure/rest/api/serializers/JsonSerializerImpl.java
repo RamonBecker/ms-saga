@@ -1,4 +1,4 @@
-package com.order.service.infrastructure.serializers;
+package com.order.service.infrastructure.rest.api.serializers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,7 +13,7 @@ public class JsonSerializerImpl implements JsonSerializer {
 
     public JsonSerializerImpl(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
-        this.objectMapper.registerModule(new JavaTimeModule());
+//        this.objectMapper.registerModule(new JavaTimeModule());
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.order.service.infrastructure.data.db.entities;
 
 
-import com.order.service.core.domain.EventHistory;
 import com.order.service.core.domain.OrderProduct;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

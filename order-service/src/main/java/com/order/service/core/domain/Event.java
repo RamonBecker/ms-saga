@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,6 +27,10 @@ public class Event {
     private LocalDateTime createdAt;
 
     public static List<EventHistory> toHistories(List<EventHistoryEntity> histories) {
+
+        if (histories == null)
+            return new ArrayList<>();
+
         return histories.stream()
                 .map(EventHistory::from)
                 .collect(Collectors.toList());
@@ -38,8 +43,8 @@ public class Event {
                 .transactionId(entity.getTransactionId())
                 .orderId(entity.getOrderId())
                 .source(entity.getSource())
-                .histories(Event.toHistories(entity.getHistories()))
-                .status(String.valueOf(entity.getStatus()))
+//                .histories(Event.toHistories(entity.getHistories()))
+                .status(entity.getStatus())
                 .createdAt(entity.getCreatedAt()).build();
 
     }

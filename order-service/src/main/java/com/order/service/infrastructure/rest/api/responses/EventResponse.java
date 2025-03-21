@@ -3,11 +3,17 @@ package com.order.service.infrastructure.rest.api.responses;
 import com.order.service.core.domain.Event;
 import com.order.service.core.domain.EventHistory;
 import com.order.service.core.domain.Order;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class EventResponse {
 
@@ -27,7 +33,7 @@ public class EventResponse {
                 .transactionId(event.getTransactionId())
                 .orderId(event.getOrderId())
                 .source(event.getSource())
-                .histories(event.getHistories())
+//                .histories(event.getHistories())
                 .status(event.getStatus())
                 .createdAt(event.getCreatedAt()).build();
     }

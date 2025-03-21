@@ -11,8 +11,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Data
 @Builder
@@ -29,7 +29,22 @@ public class OrderEntity implements Serializable {
     private double totalAmount;
     private int totalItems;
 
+
+    public static OrderEntity from(Order order) {
+        return OrderEntity.builder()
+                .id(order.getId())
+                .products(OrderEntity.toOrdersProductsEntities(order.getProducts()))
+                .createdAt(order.getCreatedAt())
+                .transactionId(order.getTransactionId())
+                .totalAmount(order.getTotalAmount())
+                .totalItems(order.getTotalItems())
+                .build();
+    }
+
     public static List<OrderProductEntity> toOrdersProductsEntities(List<OrderProduct> products) {
+
+        if (products == null) return new ArrayList<>();
+
         return products.stream().map(OrderProductEntity::from).toList();
     }
 

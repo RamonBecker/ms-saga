@@ -1,6 +1,7 @@
 package com.order.service.infrastructure.rest.api.responses;
 
-import com.order.service.infrastructure.data.db.entities.OrderProductEntity;
+import com.order.service.core.domain.Order;
+import com.order.service.core.domain.OrderProduct;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,9 +20,17 @@ public class OrderResponse {
     private LocalDateTime createdAt;
     private String transactionId;
     private double totalAmount;
-    private List<OrderProductEntity> products;
+    private int totalItems;
+    private List<OrderProduct> products;
 
-
-
-
+    public static OrderResponse from(Order order) {
+        return OrderResponse.builder()
+                .id(order.getId())
+                .createdAt(order.getCreatedAt())
+                .transactionId(order.getTransactionId())
+                .totalAmount(order.getTotalAmount())
+                .totalItems(order.getTotalItems())
+                .products(order.getProducts())
+                .build();
+    }
 }
