@@ -4,5 +4,5 @@ import com.order.service.core.domain.Order;
 
 public interface CreateOrder {
 
-    Order create(Order order);
+    Order execute(Order order);
 }

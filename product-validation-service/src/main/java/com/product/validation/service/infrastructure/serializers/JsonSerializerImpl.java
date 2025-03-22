@@ -1,15 +1,15 @@
-package com.product.validation.service.infrastructure.converters;
+package com.product.validation.service.infrastructure.serializers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.product.validation.service.infrastructure.shared.JsonSerializer;
 
-public class EventSerializer implements JsonSerializer {
+public class JsonSerializerImpl implements JsonSerializer {
 
     private final ObjectMapper objectMapper;
 
-    public EventSerializer(ObjectMapper objectMapper) {
+    public JsonSerializerImpl(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
         this.objectMapper.registerModule(new JavaTimeModule());
     }

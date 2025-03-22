@@ -4,6 +4,8 @@ import com.order.service.core.domain.Event;
 import com.order.service.core.ports.EventRepositoryPort;
 import com.order.service.infrastructure.data.db.entities.EventEntity;
 import com.order.service.infrastructure.data.db.repositories.MongoEventRepository;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
@@ -11,13 +13,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Slf4j
+@NoArgsConstructor
+@AllArgsConstructor
 public class EventRepository implements EventRepositoryPort {
 
     private MongoEventRepository repository;
-
-    public EventRepository(MongoEventRepository repository) {
-        this.repository = repository;
-    }
 
     @Override
     public Event save(Event event) {

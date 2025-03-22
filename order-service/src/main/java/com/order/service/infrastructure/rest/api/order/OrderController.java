@@ -23,7 +23,7 @@ public class OrderController {
     @PostMapping
     public OrderResponse create(@RequestBody OrderProductFilterResponse response) {
 
-        var savedOrder = createOrder.create(Order.fromFilterResponse(response));
+        var savedOrder = createOrder.execute(Order.fromFilterResponse(response));
 
         return OrderResponse.from(savedOrder);
     }

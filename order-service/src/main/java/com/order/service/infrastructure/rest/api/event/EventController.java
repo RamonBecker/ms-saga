@@ -1,7 +1,9 @@
 package com.order.service.infrastructure.rest.api.event;
 
-import com.order.service.core.usecases.event.GetEvent;
-import com.order.service.core.usecases.event.GetEventImpl;
+import com.order.service.core.usecases.event.GetAllEvent;
+import com.order.service.core.usecases.event.GetEventByOrderId;
+import com.order.service.core.usecases.event.GetEventByTransactionId;
+import com.order.service.core.usecases.event.impl.GetAllEventImpl;
 import com.order.service.infrastructure.rest.api.responses.EventFilterResponse;
 import com.order.service.infrastructure.rest.api.responses.EventResponse;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,24 +18,26 @@ import static org.springframework.util.ObjectUtils.isEmpty;
 @RequestMapping("/api/event")
 public class EventController {
 
-    private final GetEvent getEvent;
+    private final GetAllEvent getEvent;
+    private final GetEventByTransactionId getEventByTransactionId;
+    private final GetEventByOrderId getEventByOrderId;
 
 
-    public EventController( GetEventImpl getEvent) {
+    public EventController(GetAllEventImpl getEvent, GetEventByTransactionId getEventByTransactionId, GetEventByOrderId getEventByOrderId) {
         this.getEvent = getEvent;
+        this.getEventByTransactionId = getEventByTransactionId;
+        this.getEventByOrderId = getEventByOrderId;
     }
 
     @GetMapping("/all")
     public List<EventResponse> getAll() {
-
-        return getEvent.getAll().stream().map(EventResponse::from).toList();
+        return getEvent.execute().stream().map(EventResponse::from).toList();
     }
 
     @GetMapping
-    public  List<EventResponse> getTransactionOrOrder(EventFilterResponse filter) {
+    public List<EventResponse> getTransactionOrOrder(EventFilterResponse filter) {
         if (!isEmpty(filter.getOrderId()))
-            return getEvent.getByOrderId(filter.getOrderId()).stream().map(EventResponse::from).toList();
-
-        return getEvent.getByTransactionId(filter.getTransactionId()).stream().map(EventResponse::from).toList();
+            return getEventByTransactionId.execute(filter.getOrderId()).stream().map(EventResponse::from).toList();
+        return getEventByOrderId.execute(filter.getTransactionId()).stream().map(EventResponse::from).toList();
     }
 }
