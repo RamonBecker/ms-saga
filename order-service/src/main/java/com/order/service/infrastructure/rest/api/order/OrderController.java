@@ -2,7 +2,7 @@ package com.order.service.infrastructure.rest.api.order;
 
 import com.order.service.core.domain.Order;
 import com.order.service.core.usecases.order.CreateOrder;
-import com.order.service.infrastructure.rest.api.responses.OrderProductResponse;
+import com.order.service.infrastructure.rest.api.responses.OrderProductFilterResponse;
 import com.order.service.infrastructure.rest.api.responses.OrderResponse;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,9 +21,9 @@ public class OrderController {
     }
 
     @PostMapping
-    public OrderResponse create(@RequestBody OrderProductResponse response) {
+    public OrderResponse create(@RequestBody OrderProductFilterResponse response) {
 
-        var savedOrder = createOrder.create(Order.from(response));
+        var savedOrder = createOrder.create(Order.fromFilterResponse(response));
 
         return OrderResponse.from(savedOrder);
     }

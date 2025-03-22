@@ -9,7 +9,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -20,10 +22,10 @@ public class EventResponse {
     private String id;
     private String transactionId;
     private String orderId;
-    private Order order;
+    private OrderResponse order;
     private String source;
     private String status;
-    private List<EventHistory> histories;
+    private List<EventHistoryResponse> histories;
     private LocalDateTime createdAt;
 
     public static EventResponse from(Event event) {
@@ -32,9 +34,20 @@ public class EventResponse {
                 .id(event.getId())
                 .transactionId(event.getTransactionId())
                 .orderId(event.getOrderId())
+                .order(OrderResponse.from(event.getOrder()))
                 .source(event.getSource())
-//                .histories(event.getHistories())
+                .histories(EventResponse.toHistories(event.getHistories()))
                 .status(event.getStatus())
                 .createdAt(event.getCreatedAt()).build();
+    }
+
+    public static List<EventHistoryResponse> toHistories(List<EventHistory> histories) {
+
+        if (histories == null)
+            return new ArrayList<>();
+
+        return histories.stream()
+                .map(EventHistoryResponse::from)
+                .collect(Collectors.toList());
     }
 }

@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -21,7 +22,7 @@ public class OrderResponse {
     private String transactionId;
     private double totalAmount;
     private int totalItems;
-    private List<OrderProduct> products;
+    private List<OrderProductResponse> products;
 
     public static OrderResponse from(Order order) {
         return OrderResponse.builder()
@@ -30,7 +31,14 @@ public class OrderResponse {
                 .transactionId(order.getTransactionId())
                 .totalAmount(order.getTotalAmount())
                 .totalItems(order.getTotalItems())
-                .products(order.getProducts())
+                .products(OrderResponse.toOrdersProducts(order.getProducts()))
                 .build();
+    }
+
+    public static List<OrderProductResponse> toOrdersProducts(List<OrderProduct> products) {
+
+        if (products == null) return new ArrayList<>();
+
+        return products.stream().map(OrderProductResponse::from).toList();
     }
 }

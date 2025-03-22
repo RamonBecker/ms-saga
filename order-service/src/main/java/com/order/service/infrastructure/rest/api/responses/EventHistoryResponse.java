@@ -1,4 +1,4 @@
-package com.order.service.infrastructure.data.db.entities;
+package com.order.service.infrastructure.rest.api.responses;
 
 
 import com.order.service.core.domain.EventHistory;
@@ -10,25 +10,23 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Data
 @Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EventHistoryEntity {
+public class EventHistoryResponse {
 
     private String source;
     private SagaStatus status;
     private String message;
     private LocalDateTime createdAt;
 
-
-    public static EventHistoryEntity fromEntity(EventHistory history) {
-        return EventHistoryEntity.builder().source(history.getSource())
+    public static EventHistoryResponse from(EventHistory history) {
+        return EventHistoryResponse.builder().source(history.getSource())
                 .status(history.getStatus())
                 .message(history.getMessage())
                 .createdAt(history.getCreatedAt())
                 .build();
 
     }
-
 }

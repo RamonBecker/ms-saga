@@ -16,7 +16,7 @@ public class ProductEntity {
     private String code;
     private double unitValue;
 
-    public static ProductEntity from(Product product) {
+    public static ProductEntity fromEntity(Product product) {
         return ProductEntity.builder().code(product.getCode()).unitValue(product.getUnitValue()).build();
     }
 }

@@ -2,6 +2,7 @@ package com.order.service.core.domain;
 
 import com.order.service.infrastructure.data.db.entities.OrderEntity;
 import com.order.service.infrastructure.data.db.entities.OrderProductEntity;
+import com.order.service.infrastructure.rest.api.responses.OrderProductFilterResponse;
 import com.order.service.infrastructure.rest.api.responses.OrderProductResponse;
 import com.order.service.infrastructure.rest.api.responses.OrderResponse;
 import lombok.AllArgsConstructor;
@@ -28,10 +29,10 @@ public class Order implements Serializable {
     private int totalItems;
 
 
-    public static Order from(OrderEntity entity) {
+    public static Order fromEntity(OrderEntity entity) {
         return Order.builder()
                 .id(entity.getId())
-                .products(Order.toOrdersProducts(entity.getProducts()))
+                .products(Order.toOrdersProductsEntity(entity.getProducts()))
                 .createdAt(entity.getCreatedAt())
                 .transactionId(entity.getTransactionId())
                 .totalAmount(entity.getTotalAmount())
@@ -39,16 +40,10 @@ public class Order implements Serializable {
                 .build();
     }
 
-    public static Order from(OrderProductResponse response) {
-        return Order.builder()
-                .products(response.getProducts())
-                .build();
-    }
-
-    public static Order from(OrderResponse response) {
+    public static Order fromResponse(OrderResponse response) {
         return Order.builder()
                 .id(response.getId())
-                .products(response.getProducts())
+                .products(Order.toOrdersProductsResponse(response.getProducts()))
                 .createdAt(response.getCreatedAt())
                 .transactionId(response.getTransactionId())
                 .totalAmount(response.getTotalAmount())
@@ -56,10 +51,24 @@ public class Order implements Serializable {
                 .build();
     }
 
-    public static List<OrderProduct> toOrdersProducts(List<OrderProductEntity> products) {
+    public static Order fromFilterResponse(OrderProductFilterResponse response) {
+        return Order.builder()
+                .products(Order.toOrdersProductsResponse(response.getProducts()))
+                .build();
+    }
+
+
+    public static List<OrderProduct> toOrdersProductsResponse(List<OrderProductResponse> products) {
 
         if (products == null) return new ArrayList<>();
 
-        return products.stream().map(OrderProduct::from).toList();
+        return products.stream().map(OrderProduct::fromResponse).toList();
+    }
+
+    public static List<OrderProduct> toOrdersProductsEntity(List<OrderProductEntity> products) {
+
+        if (products == null) return new ArrayList<>();
+
+        return products.stream().map(OrderProduct::fromEntity).toList();
     }
 }

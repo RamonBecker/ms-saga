@@ -35,6 +35,6 @@ public class GetEventImpl implements GetEvent {
         if (orderId == null)
             throw new InvalidEventException("Order id cannot be null");
 
-        return Optional.ofNullable(repository.findByOrderId(orderId).orElseThrow(() -> new NotFoundEventException("Event not found by order id")));
+       return Optional.ofNullable(repository.findByOrderId(orderId).orElseThrow(() -> new NotFoundEventException("Event not found by order id")));
     }
 }

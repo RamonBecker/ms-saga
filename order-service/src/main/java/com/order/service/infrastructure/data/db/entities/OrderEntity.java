@@ -30,7 +30,7 @@ public class OrderEntity implements Serializable {
     private int totalItems;
 
 
-    public static OrderEntity from(Order order) {
+    public static OrderEntity fromEntity(Order order) {
         return OrderEntity.builder()
                 .id(order.getId())
                 .products(OrderEntity.toOrdersProductsEntities(order.getProducts()))
@@ -45,7 +45,7 @@ public class OrderEntity implements Serializable {
 
         if (products == null) return new ArrayList<>();
 
-        return products.stream().map(OrderProductEntity::from).toList();
+        return products.stream().map(OrderProductEntity::fromEntity).toList();
     }
 
 }

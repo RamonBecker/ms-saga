@@ -2,7 +2,6 @@ package com.order.service.infrastructure.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.order.service.core.ports.OrderServiceRepositoryPort;
 import com.order.service.core.usecases.event.GetEventImpl;
 import com.order.service.core.usecases.order.CreateOrderImpl;
 import com.order.service.infrastructure.config.kafka.KafkaProperties;
@@ -22,7 +21,6 @@ import org.springframework.kafka.core.KafkaTemplate;
 @Configuration
 public class Module {
 
-
     @Autowired
     private MongoEventRepository eventRepository;
 
@@ -37,7 +35,7 @@ public class Module {
 
 
     @Bean
-    public ObjectMapper objectMapper() {
+    public ObjectMapper createObjectMapper() {
 
         var objMapper = new ObjectMapper();
 
@@ -48,7 +46,7 @@ public class Module {
 
     @Bean
     public JsonSerializer createJsonSerializer() {
-        return new JsonSerializerImpl(objectMapper());
+        return new JsonSerializerImpl(createObjectMapper());
     }
 
     @Bean

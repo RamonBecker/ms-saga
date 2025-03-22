@@ -9,9 +9,7 @@ import com.order.service.infrastructure.data.db.entities.OrderEntity;
 import com.order.service.infrastructure.data.db.repositories.MongoOrderRepository;
 import com.order.service.infrastructure.rest.api.producer.SagaProducer;
 import com.order.service.infrastructure.shared.JsonSerializer;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public class OrderRepository implements OrderServiceRepositoryPort {
 
     private MongoOrderRepository repository;
@@ -34,13 +32,13 @@ public class OrderRepository implements OrderServiceRepositoryPort {
 
         try {
 
-            var orderEntity = OrderEntity.from(order);
+            var orderEntity = OrderEntity.fromEntity(order);
 
             var savedOrder = repository.save(orderEntity);
+            
+            producer.send(jsonSerializer.toJson(createPayload(Order.fromEntity(savedOrder))));
 
-            producer.send(jsonSerializer.toJson(createPayload(order)));
-
-            return Order.from(savedOrder);
+            return Order.fromEntity(savedOrder);
 
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
@@ -48,7 +46,7 @@ public class OrderRepository implements OrderServiceRepositoryPort {
     }
 
     private Event createPayload(Order order) {
-        return service.save(new EventEntity().setOrder(order));
+        return service.save(new Event().setOrder(order));
     }
 
 }

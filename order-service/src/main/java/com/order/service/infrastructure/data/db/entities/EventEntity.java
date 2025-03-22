@@ -3,8 +3,6 @@ package com.order.service.infrastructure.data.db.entities;
 
 import com.order.service.core.domain.Event;
 import com.order.service.core.domain.EventHistory;
-import com.order.service.core.domain.Order;
-import com.order.service.infrastructure.shared.constants.SagaStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -34,23 +32,12 @@ public class EventEntity {
     private List<EventHistoryEntity> histories;
     private LocalDateTime createdAt;
 
-
-    public Event setOrder(Order order) {
-        return Event
-                .builder()
-                .orderId(order.getId())
-                .transactionId(order.getTransactionId())
-                .order(order)
-                .createdAt(LocalDateTime.now())
-                .build();
-    }
-
-    public static EventEntity from(Event event) {
-
+    public static EventEntity fromEvent(Event event) {
         return EventEntity.builder()
                 .id(event.getId())
                 .transactionId(event.getTransactionId())
                 .orderId(event.getOrderId())
+                .order(OrderEntity.fromEntity(event.getOrder()))
                 .source(event.getSource())
                 .histories(EventEntity.toHistoriesEntities(event.getHistories()))
                 .status(event.getStatus())
@@ -62,7 +49,7 @@ public class EventEntity {
         if (histories == null) return new ArrayList<>();
 
         return histories.stream()
-                .map(EventHistoryEntity::from)
+                .map(EventHistoryEntity::fromEntity)
                 .collect(Collectors.toList());
     }
 

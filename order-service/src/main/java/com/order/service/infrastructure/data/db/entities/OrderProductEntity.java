@@ -17,9 +17,9 @@ public class OrderProductEntity {
     private int quantity;
 
 
-    public static OrderProductEntity from(OrderProduct product) {
+    public static OrderProductEntity fromEntity(OrderProduct product) {
         return OrderProductEntity.builder()
-                 .product(ProductEntity.from(product.getProduct()))
+                 .product(ProductEntity.fromEntity(product.getProduct()))
                 .quantity(product.getQuantity()).build();
 
     }

@@ -1,5 +1,7 @@
 package com.order.service.infrastructure.rest.api.responses;
 
-public record ApiResponse(int code, String message) {
+
+
+public record ApiResponse(boolean success, String message) {
 
 }

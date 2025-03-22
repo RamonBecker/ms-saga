@@ -32,7 +32,10 @@ public class EventConsumer {
 
     public void notifyEndingEvent(String payload) throws JsonProcessingException {
         log.info("Received ending notification event {} from notify-ending topic ", payload);
-        service.notifyEnding(Event.from(jsonSerializer.fromJson(payload, EventEntity.class)));
+
+        var e = Event.fromEntity(jsonSerializer.fromJson(payload, EventEntity.class));
+
+        service.notifyEnding(Event.fromEntity(jsonSerializer.fromJson(payload, EventEntity.class)));
     }
 
 }
