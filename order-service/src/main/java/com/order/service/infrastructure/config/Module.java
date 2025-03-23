@@ -3,9 +3,9 @@ package com.order.service.infrastructure.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.order.service.core.usecases.event.impl.GetAllEventImpl;
-import com.order.service.core.usecases.event.impl.GetEventByOrderIdImpl;
-import com.order.service.core.usecases.event.impl.GetEventByTransactionIdImpl;
-import com.order.service.core.usecases.order.CreateOrderImpl;
+import com.order.service.core.usecases.event.impl.GetEventByOrderImpl;
+import com.order.service.core.usecases.event.impl.GetEventByTransactionImpl;
+import com.order.service.core.usecases.order.impl.CreateOrderImpl;
 import com.order.service.infrastructure.config.kafka.KafkaProperties;
 import com.order.service.infrastructure.data.db.repositories.MongoEventRepository;
 import com.order.service.infrastructure.data.db.repositories.MongoOrderRepository;
@@ -67,21 +67,19 @@ public class Module {
         return new EventRepository(eventRepository);
     }
 
-
-    // Use Cases of Events
     @Bean
     public GetAllEventImpl createGetAllEvent() {
         return new GetAllEventImpl(createEventRepository());
     }
 
     @Bean
-    public GetEventByOrderIdImpl createGetEventByOrderId() {
-        return new GetEventByOrderIdImpl(createEventRepository());
+    public GetEventByOrderImpl createGetEventByOrderId() {
+        return new GetEventByOrderImpl(createEventRepository());
     }
 
     @Bean
-    public GetEventByTransactionIdImpl createGetEventByTransactionId() {
-        return new GetEventByTransactionIdImpl(createEventRepository());
+    public GetEventByTransactionImpl createGetEventByTransactionId() {
+        return new GetEventByTransactionImpl(createEventRepository());
     }
 
     @Bean

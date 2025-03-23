@@ -2,7 +2,7 @@ package com.order.service.infrastructure.rest.api.common;
 
 
 import com.order.service.core.usecases.event.exception.NotFoundEventException;
-import com.order.service.infrastructure.rest.api.responses.ApiResponse;
+import com.order.service.infrastructure.rest.api.dto.ApiResponse;
 import com.order.service.infrastructure.shared.exception.ValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

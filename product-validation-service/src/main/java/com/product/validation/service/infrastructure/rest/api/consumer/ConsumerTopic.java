@@ -2,7 +2,7 @@ package com.product.validation.service.infrastructure.rest.api.consumer;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.product.validation.service.infrastructure.response.EventResponse;
+import com.product.validation.service.infrastructure.dto.EventResponse;
 import com.product.validation.service.infrastructure.shared.JsonSerializer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;

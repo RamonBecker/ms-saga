@@ -2,9 +2,8 @@ package com.order.service.core.domain;
 
 import com.order.service.infrastructure.data.db.entities.OrderEntity;
 import com.order.service.infrastructure.data.db.entities.OrderProductEntity;
-import com.order.service.infrastructure.rest.api.responses.OrderProductFilterResponse;
-import com.order.service.infrastructure.rest.api.responses.OrderProductResponse;
-import com.order.service.infrastructure.rest.api.responses.OrderResponse;
+import com.order.service.infrastructure.rest.api.dto.order.OrderProductFilterDTO;
+import com.order.service.infrastructure.rest.api.dto.order.OrderProductDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -40,25 +39,25 @@ public class Order implements Serializable {
                 .build();
     }
 
-    public static Order fromResponse(OrderResponse response) {
+//    public static Order fromResponse(OrderResponse response) {
+//        return Order.builder()
+//                .id(response.getId())
+//                .products(Order.toOrdersProductsResponse(response.getProducts()))
+//                .createdAt(response.getCreatedAt())
+//                .transactionId(response.getTransactionId())
+//                .totalAmount(response.getTotalAmount())
+//                .totalItems(response.getTotalItems())
+//                .build();
+//    }
+
+    public static Order fromFilterResponse(OrderProductFilterDTO response) {
         return Order.builder()
-                .id(response.getId())
                 .products(Order.toOrdersProductsResponse(response.getProducts()))
-                .createdAt(response.getCreatedAt())
-                .transactionId(response.getTransactionId())
-                .totalAmount(response.getTotalAmount())
-                .totalItems(response.getTotalItems())
                 .build();
     }
 
-    public static Order fromFilterResponse(OrderProductFilterResponse response) {
-        return Order.builder()
-                .products(Order.toOrdersProductsResponse(response.getProducts()))
-                .build();
-    }
 
-
-    public static List<OrderProduct> toOrdersProductsResponse(List<OrderProductResponse> products) {
+    public static List<OrderProduct> toOrdersProductsResponse(List<OrderProductDTO> products) {
 
         if (products == null) return new ArrayList<>();
 

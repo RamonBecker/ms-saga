@@ -2,7 +2,7 @@ package com.order.service.core.domain;
 
 
 import com.order.service.infrastructure.data.db.entities.OrderProductEntity;
-import com.order.service.infrastructure.rest.api.responses.OrderProductResponse;
+import com.order.service.infrastructure.rest.api.dto.order.OrderProductDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,7 +24,7 @@ public class OrderProduct {
                 .build();
     }
 
-    public static OrderProduct fromResponse(OrderProductResponse response) {
+    public static OrderProduct fromResponse(OrderProductDTO response) {
         return OrderProduct.builder()
                 .product(Product.fromResponse(response.getProduct()))
                 .quantity(response.getQuantity())

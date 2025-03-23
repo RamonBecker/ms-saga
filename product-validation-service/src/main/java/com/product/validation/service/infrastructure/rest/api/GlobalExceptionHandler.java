@@ -2,7 +2,7 @@ package com.product.validation.service.infrastructure.rest.api;
 
 
 
-import com.product.validation.service.infrastructure.response.ApiResponse;
+import com.product.validation.service.infrastructure.dto.ApiResponse;
 import com.product.validation.service.infrastructure.shared.exception.ValidationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

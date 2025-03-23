@@ -2,7 +2,7 @@ package com.order.service.core.domain;
 
 
 import com.order.service.infrastructure.data.db.entities.ProductEntity;
-import com.order.service.infrastructure.rest.api.responses.ProductResponse;
+import com.order.service.infrastructure.rest.api.dto.product.ProductDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,7 +24,7 @@ public class Product {
                 .build();
     }
 
-    public static Product fromResponse(ProductResponse response) {
+    public static Product fromResponse(ProductDTO response) {
         return Product.builder()
                 .code(response.getCode())
                 .unitValue(response.getUnitValue())
