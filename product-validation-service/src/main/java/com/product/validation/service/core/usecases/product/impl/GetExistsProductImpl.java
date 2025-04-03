@@ -2,13 +2,13 @@ package com.product.validation.service.core.usecases.product.impl;
 
 
 import com.product.validation.service.core.ports.ProductRepositoryPort;
-import com.product.validation.service.core.usecases.product.GetExistsProductByCode;
+import com.product.validation.service.core.usecases.product.GetExistsProduct;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @AllArgsConstructor
-public class GetExistsProductByCodeImpl implements GetExistsProductByCode {
+public class GetExistsProductImpl implements GetExistsProduct {
 
     private ProductRepositoryPort productRepository;
 

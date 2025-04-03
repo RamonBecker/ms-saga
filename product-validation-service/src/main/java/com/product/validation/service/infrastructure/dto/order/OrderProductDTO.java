@@ -1,6 +1,7 @@
-package com.product.validation.service.infrastructure.dto;
+package com.product.validation.service.infrastructure.dto.order;
 
 
+import com.product.validation.service.infrastructure.dto.product.ProductDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,9 +9,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderProductResponse {
+public class OrderProductDTO {
 
-    private ProductResponse product;
+    private ProductDTO product;
     private int quantity;
 
 }

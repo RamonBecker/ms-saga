@@ -27,8 +27,6 @@ spring:
       auto-offset-reset: latest
 
 
-
-
 logging:
   level:
     org:

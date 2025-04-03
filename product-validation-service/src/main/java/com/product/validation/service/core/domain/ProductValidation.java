@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 @Builder
 public class ProductValidation {
 
-
     private Integer id;
     private String orderId;
     private String transactionId;
@@ -23,7 +22,7 @@ public class ProductValidation {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public static ProductValidation fromEntity(ProductValidationEntity entity) {
+    public static ProductValidation fromDomain(ProductValidationEntity entity) {
         return ProductValidation.builder()
                 .id(entity.getId())
                 .orderId(entity.getOrderId())

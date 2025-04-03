@@ -1,15 +1,13 @@
-package com.order.service.core.domain;
+package com.product.validation.service.core.domain;
 
-import com.order.service.infrastructure.data.db.entities.OrderEntity;
-import com.order.service.infrastructure.data.db.entities.OrderProductEntity;
-import com.order.service.infrastructure.rest.api.dto.order.OrderProductFilterDTO;
-import com.order.service.infrastructure.rest.api.dto.order.OrderProductDTO;
+
+import com.product.validation.service.infrastructure.dto.order.OrderDTO;
+import com.product.validation.service.infrastructure.dto.order.OrderProductDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +16,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Order implements Serializable {
+public class Order {
 
     private String id;
     private List<OrderProduct> products;
@@ -28,46 +26,23 @@ public class Order implements Serializable {
     private int totalItems;
 
 
-    public static Order fromEntity(OrderEntity entity) {
+    public static Order fromOrder(OrderDTO dto) {
         return Order.builder()
-                .id(entity.getId())
-                .products(Order.toOrdersProductsEntity(entity.getProducts()))
-                .createdAt(entity.getCreatedAt())
-                .transactionId(entity.getTransactionId())
-                .totalAmount(entity.getTotalAmount())
-                .totalItems(entity.getTotalItems())
-                .build();
-    }
-
-//    public static Order fromResponse(OrderResponse response) {
-//        return Order.builder()
-//                .id(response.getId())
-//                .products(Order.toOrdersProductsResponse(response.getProducts()))
-//                .createdAt(response.getCreatedAt())
-//                .transactionId(response.getTransactionId())
-//                .totalAmount(response.getTotalAmount())
-//                .totalItems(response.getTotalItems())
-//                .build();
-//    }
-
-    public static Order fromFilterResponse(OrderProductFilterDTO response) {
-        return Order.builder()
-                .products(Order.toOrdersProductsResponse(response.getProducts()))
+                .id(dto.getId())
+                .products(Order.toOrdersProducts(dto.getProducts()))
+                .createdAt(dto.getCreatedAt())
+                .transactionId(dto.getTransactionId())
+                .totalAmount(dto.getTotalAmount())
+                .totalItems(dto.getTotalItems())
                 .build();
     }
 
 
-    public static List<OrderProduct> toOrdersProductsResponse(List<OrderProductDTO> products) {
+    public static List<OrderProduct> toOrdersProducts(List<OrderProductDTO> products) {
 
         if (products == null) return new ArrayList<>();
 
-        return products.stream().map(OrderProduct::fromResponse).toList();
+        return products.stream().map(OrderProduct::fromOrderProduct).toList();
     }
 
-    public static List<OrderProduct> toOrdersProductsEntity(List<OrderProductEntity> products) {
-
-        if (products == null) return new ArrayList<>();
-
-        return products.stream().map(OrderProduct::fromEntity).toList();
-    }
 }

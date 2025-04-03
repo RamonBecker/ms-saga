@@ -1,8 +1,7 @@
-package com.order.service.core.domain;
+package com.product.validation.service.core.domain;
 
 
-import com.order.service.infrastructure.data.db.entities.EventHistoryEntity;
-import com.order.service.infrastructure.shared.constants.SagaStatus;
+import com.product.validation.service.infrastructure.dto.event.EventHistoryDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,18 +16,15 @@ import java.time.LocalDateTime;
 public class EventHistory {
 
     private String source;
-    private SagaStatus status;
+    private String status;
     private String message;
     private LocalDateTime createdAt;
 
-
-    public static EventHistory fromEntity(EventHistoryEntity historyEntity) {
-        return EventHistory.builder().source(historyEntity.getSource())
-                .status(historyEntity.getStatus())
-                .message(historyEntity.getMessage())
-                .createdAt(historyEntity.getCreatedAt())
+    public static EventHistory fromDomain(EventHistoryDTO dto) {
+        return EventHistory.builder().source(dto.getSource())
+                .status(dto.getStatus())
+                .message(dto.getMessage())
+                .createdAt(dto.getCreatedAt())
                 .build();
-
     }
-
 }

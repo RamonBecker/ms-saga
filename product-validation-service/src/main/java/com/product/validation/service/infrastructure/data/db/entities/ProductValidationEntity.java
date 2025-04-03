@@ -1,5 +1,7 @@
 package com.product.validation.service.infrastructure.data.db.entities;
 
+import com.product.validation.service.core.domain.Product;
+import com.product.validation.service.core.domain.ProductValidation;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -48,7 +50,15 @@ public class ProductValidationEntity {
         updatedAt = getDateTimeNow();
     }
 
-    private LocalDateTime getDateTimeNow(){
+    private LocalDateTime getDateTimeNow() {
         return LocalDateTime.now();
+    }
+
+    public static ProductValidationEntity fromEntity(ProductValidation product) {
+        return ProductValidationEntity.builder()
+                .orderId(product.getOrderId())
+                .transactionId(product.getTransactionId())
+                .success(product.isSuccess())
+                .build();
     }
 }

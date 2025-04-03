@@ -1,4 +1,4 @@
-package com.product.validation.service.infrastructure.dto;
+package com.product.validation.service.infrastructure.dto.event;
 
 
 import com.product.validation.service.infrastructure.shared.constants.SagaStatus;
@@ -7,16 +7,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class EventHistoryResponse {
+public class EventHistoryDTO {
 
     private String source;
-    private SagaStatus status;
+    private String status;
     private String message;
     private LocalDateTime createdAt;
 

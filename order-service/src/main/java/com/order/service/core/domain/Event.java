@@ -43,7 +43,7 @@ public class Event {
             return new ArrayList<>();
 
         return histories.stream()
-                .map(EventHistory::fromEntity)
+                .map(EventHistory::fromDomain)
                 .collect(Collectors.toList());
     }
 

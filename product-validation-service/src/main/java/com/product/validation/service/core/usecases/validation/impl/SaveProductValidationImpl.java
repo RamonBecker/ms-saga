@@ -6,19 +6,24 @@ import com.product.validation.service.core.domain.ProductValidation;
 import com.product.validation.service.core.ports.ProductRepositoryPort;
 import com.product.validation.service.core.ports.ProductValidationRepositoryPort;
 import com.product.validation.service.core.usecases.product.exception.ProductValidationException;
-import com.product.validation.service.core.usecases.validation.SaveProduct;
+import com.product.validation.service.core.usecases.validation.SaveProductValidation;
 import com.product.validation.service.core.usecases.validation.exception.OrderValidationException;
 import com.product.validation.service.core.usecases.validation.exception.TransactionValidationException;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 
-public class SaveProductImpl implements SaveProduct {
+@NoArgsConstructor
+@AllArgsConstructor
+public class SaveProductValidationImpl implements SaveProductValidation {
 
 
     private ProductValidationRepositoryPort productValidationPort;
     private ProductRepositoryPort productPort;
 
+
     @Override
-    public void execute(Event event) {
+    public void execute(Event event, boolean isSuccess) {
 
         if (event.getOrder() == null || event.getOrder().getId() == null)
             throw new OrderValidationException("Order cannot be null");
@@ -37,16 +42,12 @@ public class SaveProductImpl implements SaveProduct {
                 }
         );
 
-
-        var validation = ProductValidation
+        productValidationPort.save(ProductValidation
                 .builder()
                 .orderId(event.getOrder().getId())
                 .transactionId(event.getTransactionId())
-                .success(true)
-                .build();
-
-        productValidationPort.save(validation);
-
+                .success(isSuccess)
+                .build());
     }
 
     private void validateProduct(Product product) {

@@ -22,13 +22,12 @@ public class EventHistory {
     private LocalDateTime createdAt;
 
 
-    public static EventHistory fromEntity(EventHistoryEntity historyEntity) {
+    public static EventHistory fromDomain(EventHistoryEntity historyEntity) {
         return EventHistory.builder().source(historyEntity.getSource())
                 .status(historyEntity.getStatus())
                 .message(historyEntity.getMessage())
                 .createdAt(historyEntity.getCreatedAt())
                 .build();
-
     }
 
 }

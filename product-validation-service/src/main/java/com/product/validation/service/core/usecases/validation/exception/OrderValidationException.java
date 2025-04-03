@@ -1,8 +1,8 @@
 package com.product.validation.service.core.usecases.validation.exception;
 
-public class InvalidOrderException extends RuntimeException {
+public class OrderValidationException extends RuntimeException {
 
-    public InvalidOrderException(String message) {
+    public OrderValidationException(String message) {
         super(message);
     }
 }
