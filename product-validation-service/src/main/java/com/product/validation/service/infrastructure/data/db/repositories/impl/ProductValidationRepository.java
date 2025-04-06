@@ -31,6 +31,10 @@ public class ProductValidationRepository implements ProductValidationRepositoryP
 
     @Override
     public void save(ProductValidation productValidation) {
+
+        if (existsByOrderIdAndTransactionId(productValidation.getOrderId(), productValidation.getTransactionId()))
+            productValidation.setId(findByOrderIdAndTransactionId(productValidation.getOrderId(), productValidation.getTransactionId()).get().getId());
+
         validationRepository.save(ProductValidationEntity.fromEntity(productValidation));
     }
 

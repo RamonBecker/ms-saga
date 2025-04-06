@@ -9,6 +9,7 @@ import com.product.validation.service.core.usecases.validation.UpdateProductVali
 import com.product.validation.service.infrastructure.dto.event.EventDTO;
 import com.product.validation.service.infrastructure.rest.api.producer.ProducerTopic;
 import com.product.validation.service.infrastructure.shared.JsonSerializer;
+import com.product.validation.service.infrastructure.shared.constants.SagaStatus;
 import lombok.extern.slf4j.Slf4j;
 
 import static com.product.validation.service.infrastructure.shared.constants.SagaStatus.*;
@@ -36,19 +37,14 @@ public class SendProduct {
         try {
 
             save.execute(Event.from(dto), true);
-
-            dto.setStatus(String.valueOf(SUCCESS));
-            dto.setSource(CURRENT_SOURCE);
-            dto.addHistory("Products are validated successfully!");
+            
+            setStatusEvent(SUCCESS, "Products are validated successfully!", dto);
 
         } catch (Exception e) {
 
             log.error("Error trying to validate product: ", e);
 
-            dto.setStatus(String.valueOf(ROLLBACK_PENDING));
-            dto.setSource(CURRENT_SOURCE);
-
-            dto.addHistory("Fail to validate products: ".concat(e.getMessage()));
+            setStatusEvent(ROLLBACK_PENDING, "Fail to validate products: ".concat(e.getMessage()), dto);
         }
 
         producer.send(serializer.toJson(dto));
@@ -57,9 +53,7 @@ public class SendProduct {
 
     public void rollback(EventDTO dto) throws JsonProcessingException {
 
-        dto.setStatus(String.valueOf(FAIL));
-        dto.setSource(CURRENT_SOURCE);
-        dto.addHistory("Rollback executed on product validation!");
+        setStatusEvent(FAIL, "Rollback executed on product validation!", dto);
 
         if (getProductValidation.execute(dto.getOrderId(), dto.getTransactionId()))
             update.execute(Event.from(dto), false);
@@ -67,5 +61,11 @@ public class SendProduct {
             save.execute(Event.from(dto), false);
 
         producer.send(serializer.toJson(dto));
+    }
+
+    private void setStatusEvent(SagaStatus status, String message, EventDTO dto) {
+        dto.setStatus(String.valueOf(status));
+        dto.setSource(CURRENT_SOURCE);
+        dto.addHistory(message);
     }
 }

@@ -11,7 +11,6 @@ public class JsonSerializerImpl implements JsonSerializer {
 
     public JsonSerializerImpl(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
-        this.objectMapper.registerModule(new JavaTimeModule());
     }
 
     @Override

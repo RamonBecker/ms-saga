@@ -56,6 +56,7 @@ public class ProductValidationEntity {
 
     public static ProductValidationEntity fromEntity(ProductValidation product) {
         return ProductValidationEntity.builder()
+                .id(product.getId())
                 .orderId(product.getOrderId())
                 .transactionId(product.getTransactionId())
                 .success(product.isSuccess())

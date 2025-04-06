@@ -55,7 +55,7 @@ public class SaveProductValidationImpl implements SaveProductValidation {
             throw new ProductValidationException("Product cannot be null");
         if (product.getCode() == null || product.getCode().isEmpty())
             throw new ProductValidationException("Product code must be informed!");
-        if (productPort.existsByCode(product.getCode()))
-            throw new ProductValidationException("Product already exists!");
+        if (!productPort.existsByCode(product.getCode()))
+            throw new ProductValidationException("Product does not exists in database!!");
     }
 }
