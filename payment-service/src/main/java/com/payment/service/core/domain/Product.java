@@ -1,7 +1,7 @@
-package com.product.validation.service.core.domain;
+package com.payment.service.core.domain;
 
 
-import com.product.validation.service.infrastructure.dto.product.ProductDTO;
+import com.payment.service.infrastructure.dto.product.ProductDTO;
 import lombok.*;
 
 @Getter

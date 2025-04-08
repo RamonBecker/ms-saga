@@ -1,7 +1,7 @@
-package com.product.validation.service.infrastructure.dto.event;
+package com.payment.service.infrastructure.dto.event;
 
 
-import com.product.validation.service.infrastructure.dto.order.OrderDTO;
+import com.payment.service.infrastructure.dto.order.OrderDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,7 +17,6 @@ import java.util.List;
 @AllArgsConstructor
 public class EventDTO {
 
-
     private String id;
     private String transactionId;
     private String orderId;
@@ -27,4 +26,15 @@ public class EventDTO {
     private List<EventHistoryDTO> histories;
     private LocalDateTime createdAt;
 
+    public void addHistory(String message) {
+        if (histories == null)
+            histories = new ArrayList<>();
+
+        histories.add(
+                EventHistoryDTO.builder()
+                        .source(getSource())
+                        .status(getStatus())
+                        .message(message)
+                        .createdAt(LocalDateTime.now()).build());
+    }
 }

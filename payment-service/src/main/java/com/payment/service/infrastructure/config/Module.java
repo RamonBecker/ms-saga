@@ -1,0 +1,93 @@
+package com.payment.service.infrastructure.config;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.payment.service.core.ports.PaymentRepositoryPort;
+import com.payment.service.core.usecases.payment.GetExistsByOrderAndTransaction;
+import com.payment.service.core.usecases.payment.GetPaymentByOrderAndTransaction;
+import com.payment.service.core.usecases.payment.SavePayment;
+import com.payment.service.core.usecases.payment.UpdatePaymentStatus;
+import com.payment.service.core.usecases.payment.impl.GetExistsPaymentByOrderTransactionImpl;
+import com.payment.service.core.usecases.payment.impl.GetPaymentByOrderTransactionImpl;
+import com.payment.service.core.usecases.payment.impl.SavePaymentImpl;
+import com.payment.service.core.usecases.payment.impl.UpdatePaymentStatusImpl;
+import com.payment.service.infrastructure.config.kafka.KafkaProperties;
+import com.payment.service.infrastructure.data.db.repositories.JpaPaymentRepository;
+import com.payment.service.infrastructure.data.db.repositories.impl.PaymentRepositoryImpl;
+import com.payment.service.infrastructure.rest.api.consumer.ConsumerTopic;
+import com.payment.service.infrastructure.rest.api.payment.SendPayment;
+import com.payment.service.infrastructure.rest.api.producer.ProducerTopic;
+import com.payment.service.infrastructure.serializers.JsonSerializerImpl;
+import com.payment.service.infrastructure.shared.JsonSerializer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.kafka.core.KafkaTemplate;
+
+@Configuration
+public class Module {
+
+    @Autowired
+    private JpaPaymentRepository paymentRepository;
+
+    @Autowired
+    private KafkaProperties kafkaProperties;
+
+    @Autowired
+    private KafkaTemplate<String, String> kafkaTemplate;
+
+    @Bean
+    public PaymentRepositoryPort createPaymentRepository() {
+        return new PaymentRepositoryImpl(paymentRepository);
+    }
+
+    @Bean
+    public ObjectMapper createObjectMapper() {
+
+        var objMapper = new ObjectMapper();
+
+        objMapper.registerModule(new JavaTimeModule());
+
+        return objMapper;
+    }
+
+    @Bean
+    public JsonSerializer createJsonSerializer() {
+        return new JsonSerializerImpl(createObjectMapper());
+    }
+
+    @Bean
+    public ProducerTopic createProducerTopic() {
+        return new ProducerTopic(kafkaTemplate, kafkaProperties);
+    }
+
+    @Bean
+    public ConsumerTopic createConsumerTopic() {
+        return new ConsumerTopic(createJsonSerializer(), createSendPayment());
+    }
+
+    @Bean
+    public SavePayment createSavePayment() {
+        return new SavePaymentImpl(createPaymentRepository());
+    }
+
+    @Bean
+    public UpdatePaymentStatus createUpdatePaymentStatus() {
+        return new UpdatePaymentStatusImpl(createPaymentRepository());
+    }
+
+    @Bean
+    public GetExistsByOrderAndTransaction createExistsByOrderAndTransaction() {
+        return new GetExistsPaymentByOrderTransactionImpl(createPaymentRepository());
+    }
+
+    @Bean
+    public GetPaymentByOrderAndTransaction createGetPaymentByOrderAndTransaction() {
+        return new GetPaymentByOrderTransactionImpl(createPaymentRepository());
+    }
+
+    @Bean
+    public SendPayment createSendPayment() {
+        return new SendPayment(createSavePayment(), createUpdatePaymentStatus(), createGetPaymentByOrderAndTransaction(), createJsonSerializer(), createProducerTopic());
+    }
+}

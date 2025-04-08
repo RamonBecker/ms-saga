@@ -1,4 +1,4 @@
-package com.payment.service.infrastructure.response;
+package com.payment.service.infrastructure.dto.product;
 
 
 import lombok.AllArgsConstructor;
@@ -8,10 +8,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductResponse {
+public class ProductDTO {
 
     private String code;
     private double unitValue;
-
-
 }

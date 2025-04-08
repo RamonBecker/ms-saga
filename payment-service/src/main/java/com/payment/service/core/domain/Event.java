@@ -1,13 +1,9 @@
-package com.product.validation.service.core.domain;
+package com.payment.service.core.domain;
 
 
-import com.product.validation.service.infrastructure.dto.event.EventDTO;
-import com.product.validation.service.infrastructure.dto.event.EventHistoryDTO;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.NoArgsConstructor;
+import com.payment.service.infrastructure.dto.event.EventDTO;
+import com.payment.service.infrastructure.dto.event.EventHistoryDTO;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -29,6 +25,9 @@ public class Event {
     private String status;
     private List<EventHistory> histories;
     private LocalDateTime createdAt;
+
+
+
 
     public void addHistory(String message) {
         if (histories == null)

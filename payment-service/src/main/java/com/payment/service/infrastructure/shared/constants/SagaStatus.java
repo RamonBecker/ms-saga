@@ -5,4 +5,6 @@ public enum SagaStatus {
     SUCCESS,
     FAIL,
     ROLLBACK_PENDING,
+    REFUND,
+    PENDING
 }

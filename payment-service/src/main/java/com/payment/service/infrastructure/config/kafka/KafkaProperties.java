@@ -14,6 +14,7 @@ public class KafkaProperties {
     private final Topic topic = new Topic();
 
     @Getter
+    @Setter
     private String bootstrapServers;
 
     public static class Consumer {

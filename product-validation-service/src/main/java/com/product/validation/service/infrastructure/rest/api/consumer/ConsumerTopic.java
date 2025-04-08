@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ConsumerTopic {
 
+
     private final JsonSerializer serializer;
     private final SendProduct send;
 

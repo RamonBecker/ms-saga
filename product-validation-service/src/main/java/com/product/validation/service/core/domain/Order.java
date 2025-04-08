@@ -26,7 +26,7 @@ public class Order {
     private int totalItems;
 
 
-    public static Order fromOrder(OrderDTO dto) {
+    public static Order fromDomain(OrderDTO dto) {
         return Order.builder()
                 .id(dto.getId())
                 .products(Order.toOrdersProducts(dto.getProducts()))

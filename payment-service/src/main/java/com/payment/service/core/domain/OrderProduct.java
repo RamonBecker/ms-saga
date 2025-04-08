@@ -1,7 +1,7 @@
-package com.product.validation.service.core.domain;
+package com.payment.service.core.domain;
 
 
-import com.product.validation.service.infrastructure.dto.order.OrderProductDTO;
+import com.payment.service.infrastructure.dto.order.OrderProductDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,12 +16,11 @@ public class OrderProduct {
     private Product product;
     private int quantity;
 
-    public static OrderProduct fromOrderProduct(OrderProductDTO response) {
+
+    public static OrderProduct fromDomain(OrderProductDTO response) {
         return OrderProduct.builder()
                 .product(Product.fromDomain(response.getProduct()))
                 .quantity(response.getQuantity())
                 .build();
     }
-
-
 }
