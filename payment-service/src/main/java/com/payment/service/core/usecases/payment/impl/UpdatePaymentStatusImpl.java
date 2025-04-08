@@ -17,18 +17,14 @@ public class UpdatePaymentStatusImpl implements UpdatePaymentStatus {
     private PaymentRepositoryPort repository;
 
     @Override
-    public void execute(SagaStatus status, Event event) throws PaymentNotFoundException {
+    public void execute(SagaStatus status, Event event) throws PaymentNotFoundException, AmountValidationException {
 
-        repository.getByOrderIdAndTransactionId(event.getOrderId(), event.getTransactionId()).ifPresent(
-                payment -> {
-                    try {
-                        payment.validateAmount();
-                    } catch (AmountValidationException e) {
-                        throw new RuntimeException(e);
-                    }
-                    payment.setStatus(String.valueOf(status));
-                    repository.save(payment);
-                }
-        );
+        var payment = repository.getByOrderIdAndTransactionId(event.getOrderId(), event.getTransactionId())
+                .orElseThrow(() -> new PaymentNotFoundException("Payment not found"));
+
+
+        payment.validateAmount();
+        payment.setStatus(String.valueOf(status));
+        repository.save(payment);
     }
 }

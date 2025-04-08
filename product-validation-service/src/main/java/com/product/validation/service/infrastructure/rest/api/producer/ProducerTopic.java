@@ -7,9 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
-// Criar um componente do spring para criar os eventos
-// Produtor e Consumidor devem ficar separados com suas regras
-
 
 @Slf4j
 @Component
@@ -23,7 +20,7 @@ public class ProducerTopic {
         this.kafkaProperties = kafkaProperties;
     }
 
-    public void send(String payload) throws JsonProcessingException {
+    public void send(String payload) {
 
         var topic = kafkaProperties.getTopic().getOrchestrator();
 

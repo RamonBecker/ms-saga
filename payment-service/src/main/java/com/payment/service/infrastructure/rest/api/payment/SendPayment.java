@@ -50,7 +50,7 @@ public class SendPayment {
             event.setStatus(String.valueOf(SUCCESS));
             event.addHistory("Payment was successfully realized!");
 
-        } catch (RuntimeException ex) {
+        } catch (Exception ex) {
 
             log.error("Error trying to make payment: ", ex);
             event.setStatus(String.valueOf(ROLLBACK_PENDING));

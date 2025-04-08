@@ -27,11 +27,12 @@ public class Event {
     private LocalDateTime createdAt;
 
 
-
-
     public void addHistory(String message) {
         if (histories == null)
             histories = new ArrayList<>();
+
+
+        createdAt = LocalDateTime.now();
 
         histories.add(
                 EventHistory.builder()
@@ -49,6 +50,7 @@ public class Event {
                 .order(Order.fromDomain(dto.getOrder()))
                 .source(dto.getSource())
                 .status(dto.getStatus())
+                .createdAt(dto.getCreatedAt())
                 .histories(Event.toDomainHistories(dto.getHistories()))
                 .build();
     }

@@ -48,7 +48,7 @@ public class Payment {
 
     public void validateAmount() throws AmountValidationException {
         if (getTotalAmount() < MIN_AMOUNT.getValue())
-            throw new AmountValidationException("The minimal amount available is {}".concat(MIN_AMOUNT.getValue().toString()));
+            throw new AmountValidationException("The minimal amount available is ".concat(MIN_AMOUNT.getValue().toString()));
     }
 
 

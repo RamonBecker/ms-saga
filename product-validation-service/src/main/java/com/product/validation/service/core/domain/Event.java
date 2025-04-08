@@ -34,6 +34,8 @@ public class Event {
         if (histories == null)
             histories = new ArrayList<>();
 
+        createdAt = LocalDateTime.now();
+
         histories.add(
                 EventHistory.builder()
                         .source(getSource())
@@ -50,6 +52,7 @@ public class Event {
                 .order(Order.fromDomain(dto.getOrder()))
                 .source(dto.getSource())
                 .status(dto.getStatus())
+                .createdAt(dto.getCreatedAt())
                 .histories(Event.toDomainHistories(dto.getHistories()))
                 .build();
     }
