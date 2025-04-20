@@ -1,4 +1,4 @@
-package com.example.inventory.service.infrastructure.response;
+package com.example.inventory.service.infrastructure.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,10 +12,10 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderResponse {
+public class OrderDTO {
 
     private String id;
-    private List<OrderProductResponse> products;
+    private List<OrderProductDTO> products;
     private LocalDateTime createdAt;
     private String transactionId;
     private double totalAmount;

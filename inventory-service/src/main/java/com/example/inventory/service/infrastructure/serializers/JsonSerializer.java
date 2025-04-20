@@ -1,4 +1,4 @@
-package com.example.inventory.service.infrastructure.shared;
+package com.example.inventory.service.infrastructure.serializers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 

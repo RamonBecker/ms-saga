@@ -54,6 +54,11 @@ public class PaymentEntity {
 
     }
 
+    @PreUpdate
+    public void preUpdate() {
+        updatedAt = getDateTimeNow();
+    }
+
     private LocalDateTime getDateTimeNow() {
         return LocalDateTime.now();
     }

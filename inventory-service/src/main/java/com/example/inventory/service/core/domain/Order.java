@@ -1,8 +1,7 @@
-package com.product.validation.service.core.domain;
+package com.example.inventory.service.core.domain;
 
-
-import com.product.validation.service.infrastructure.dto.order.OrderDTO;
-import com.product.validation.service.infrastructure.dto.order.OrderProductDTO;
+import com.example.inventory.service.infrastructure.dto.OrderDTO;
+import com.example.inventory.service.infrastructure.dto.OrderProductDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

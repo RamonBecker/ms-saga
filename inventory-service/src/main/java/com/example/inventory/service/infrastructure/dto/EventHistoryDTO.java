@@ -1,7 +1,6 @@
-package com.example.inventory.service.infrastructure.response;
+package com.example.inventory.service.infrastructure.dto;
 
 
-import com.order.service.infrastructure.shared.constants.SagaStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,10 +12,10 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class EventHistoryResponse {
+public class EventHistoryDTO {
 
     private String source;
-    private SagaStatus status;
+    private String status;
     private String message;
     private LocalDateTime createdAt;
 

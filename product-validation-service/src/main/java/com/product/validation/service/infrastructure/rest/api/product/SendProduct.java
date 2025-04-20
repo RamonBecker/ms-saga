@@ -23,7 +23,6 @@ public class SendProduct {
     private final JsonSerializer serializer;
     private final ProducerTopic producer;
 
-
     public SendProduct(SaveProductValidation save, UpdateProductValidation update, GetExistsProductValidationByOrderAndTransaction getProductValidation, JsonSerializer serializer, ProducerTopic producer) {
         this.save = save;
         this.update = update;
@@ -53,8 +52,7 @@ public class SendProduct {
         producer.send(serializer.toJson(dto));
     }
 
-
-    public void rollback(EventDTO dto) throws JsonProcessingException {
+    public void rollback(EventDTO dto) throws Exception {
 
         var event = Event.fromDomain(dto);
 
@@ -69,5 +67,4 @@ public class SendProduct {
 
         producer.send(serializer.toJson(event));
     }
-
 }
