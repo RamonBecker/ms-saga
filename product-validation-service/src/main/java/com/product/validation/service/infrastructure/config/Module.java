@@ -18,10 +18,13 @@ import com.product.validation.service.infrastructure.data.db.repositories.JpaPro
 import com.product.validation.service.infrastructure.data.db.repositories.impl.ProductRepository;
 import com.product.validation.service.infrastructure.data.db.repositories.impl.ProductValidationRepository;
 import com.product.validation.service.infrastructure.rest.api.consumer.ConsumerTopic;
+import com.product.validation.service.infrastructure.rest.api.consumer.usecases.ConsumeEventHandler;
+import com.product.validation.service.infrastructure.rest.api.consumer.ConsumeEventHandlerImpl;
 import com.product.validation.service.infrastructure.rest.api.producer.ProducerTopic;
-import com.product.validation.service.infrastructure.rest.api.product.SendProduct;
-import com.product.validation.service.infrastructure.rest.api.serializers.JsonSerializerImpl;
-import com.product.validation.service.infrastructure.shared.JsonSerializer;
+import com.product.validation.service.infrastructure.rest.api.product.ProductResolver;
+import com.product.validation.service.infrastructure.rest.api.publisher.EventPublisher;
+import com.product.validation.service.infrastructure.rest.api.serializers.impl.JsonSerializerImpl;
+import com.product.validation.service.infrastructure.rest.api.serializers.JsonSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -63,8 +66,13 @@ public class Module {
     }
 
     @Bean
+    public ConsumeEventHandler createConsumeEventHandler() {
+        return new ConsumeEventHandlerImpl(createProductResolver());
+    }
+
+    @Bean
     public ConsumerTopic createConsumerTopic() {
-        return new ConsumerTopic(createJsonSerializer(), createSendProduct());
+        return new ConsumerTopic(createJsonSerializer(), createConsumeEventHandler());
     }
 
     @Bean
@@ -78,8 +86,13 @@ public class Module {
     }
 
     @Bean
-    public SendProduct createSendProduct() {
-        return new SendProduct(createSaveProductValidation(), createUpdateProductValidation(), createGetExistsProductValidationByOrderAndTransaction(), createJsonSerializer(), createProducerTopic());
+    public EventPublisher createEventPublisher() {
+        return new EventPublisher(createJsonSerializer(), createProducerTopic());
+    }
+
+    @Bean
+    public ProductResolver createProductResolver() {
+        return new ProductResolver(createSaveProductValidation(), createUpdateProductValidation(), createGetExistsProductValidationByOrderAndTransaction(), createEventPublisher());
     }
 
     // use cases

@@ -1,7 +1,5 @@
 package com.example.inventory.service.infrastructure.config;
 
-import com.example.inventory.service.core.ports.InventoryRepositoryPort;
-import com.example.inventory.service.core.ports.OrderInventoryRepositoryPort;
 import com.example.inventory.service.core.usecases.inventory.SaveInventory;
 import com.example.inventory.service.core.usecases.inventory.impl.SaveInventoryImpl;
 import com.example.inventory.service.core.usecases.orderInventory.RollbackOrderInventory;
@@ -13,8 +11,11 @@ import com.example.inventory.service.infrastructure.data.db.repositories.JpaInve
 import com.example.inventory.service.infrastructure.data.db.repositories.JpaOrderInventoryRepository;
 import com.example.inventory.service.infrastructure.data.db.repositories.impl.InventoryRepository;
 import com.example.inventory.service.infrastructure.data.db.repositories.impl.OrderInventoryRepository;
-import com.example.inventory.service.infrastructure.rest.api.inventory.SendInventory;
+import com.example.inventory.service.infrastructure.rest.api.consumer.ConsumeEventHandlerImpl;
+import com.example.inventory.service.infrastructure.rest.api.consumer.usecases.ConsumeEventHandler;
+import com.example.inventory.service.infrastructure.rest.api.inventory.InventoryResolver;
 import com.example.inventory.service.infrastructure.rest.api.producer.ProducerTopic;
+import com.example.inventory.service.infrastructure.rest.api.publisher.EventPublisher;
 import com.example.inventory.service.infrastructure.serializers.JsonSerializer;
 import com.example.inventory.service.infrastructure.serializers.impl.JsonSerializerImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -68,14 +69,19 @@ public class Module {
         return new ProducerTopic(kafkaTemplate, kafkaProperties);
     }
 
+
     @Bean
-    public SendInventory createSendInventory() {
-        return new SendInventory(
+    public EventPublisher createEventPublisher() {
+        return new EventPublisher(createJsonSerializer(), createProducerTopic());
+    }
+
+    @Bean
+    public InventoryResolver createInventoryResolver() {
+        return new InventoryResolver(
                 createSaveOrderInventory(),
                 createSaveInventory(),
                 createRollbackOrderInventory(),
-                createProducerTopic(),
-                createJsonSerializer()
+                createEventPublisher()
         );
     }
 
@@ -92,6 +98,12 @@ public class Module {
     @Bean
     public SaveOrderInventory createSaveOrderInventory() {
         return new SaveOrderInventoryImpl(createOrderInventoryRepository(), createInventoryRepository());
+    }
+
+    
+    @Bean
+    public ConsumeEventHandler createConsumeEventHandler() {
+        return new ConsumeEventHandlerImpl(createInventoryResolver());
     }
 
 }

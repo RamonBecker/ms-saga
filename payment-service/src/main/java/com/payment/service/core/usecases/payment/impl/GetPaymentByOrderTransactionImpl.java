@@ -1,6 +1,6 @@
 package com.payment.service.core.usecases.payment.impl;
 
-import com.payment.service.core.domain.Payment;
+import com.payment.service.core.domain.payment.Payment;
 import com.payment.service.core.ports.PaymentRepositoryPort;
 import com.payment.service.core.usecases.payment.GetPaymentByOrderAndTransaction;
 import com.payment.service.core.usecases.payment.exception.PaymentNotFoundException;

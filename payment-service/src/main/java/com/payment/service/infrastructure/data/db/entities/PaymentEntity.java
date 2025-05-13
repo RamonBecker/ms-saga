@@ -1,8 +1,7 @@
 package com.payment.service.infrastructure.data.db.entities;
 
 
-import com.payment.service.core.domain.Payment;
-import com.payment.service.infrastructure.shared.constants.SagaStatus;
+import com.payment.service.core.domain.payment.Payment;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-import static com.payment.service.infrastructure.shared.constants.SagaStatus.PENDING;
+import static com.payment.service.infrastructure.shared.constants.Status.PENDING;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Data

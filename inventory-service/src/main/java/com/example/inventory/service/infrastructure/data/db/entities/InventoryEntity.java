@@ -1,6 +1,6 @@
 package com.example.inventory.service.infrastructure.data.db.entities;
 
-import com.example.inventory.service.core.domain.Inventory;
+import com.example.inventory.service.core.domain.inventory.Inventory;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,8 +1,8 @@
 package com.order.service.infrastructure.data.db.entities;
 
 
-import com.order.service.core.domain.Event;
-import com.order.service.core.domain.EventHistory;
+import com.order.service.core.domain.event.Event;
+import com.order.service.core.domain.event.EventHistory;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,6 +1,6 @@
 package com.order.service.core.usecases.event.impl;
 
-import com.order.service.core.domain.Event;
+import com.order.service.core.domain.event.Event;
 import com.order.service.core.ports.EventRepositoryPort;
 import com.order.service.core.usecases.event.CreateEvent;
 import lombok.AllArgsConstructor;

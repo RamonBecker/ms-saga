@@ -1,6 +1,6 @@
 package com.order.service.infrastructure.rest.api.order;
 
-import com.order.service.core.domain.Order;
+import com.order.service.core.domain.order.Order;
 import com.order.service.core.usecases.order.CreateOrder;
 import com.order.service.infrastructure.rest.api.dto.order.OrderDTO;
 import com.order.service.infrastructure.rest.api.dto.order.OrderProductFilterDTO;

@@ -1,7 +1,7 @@
 package com.product.validation.service.core.usecases.validation;
 
 
-import com.product.validation.service.core.domain.ProductValidation;
+import com.product.validation.service.core.domain.product.ProductValidation;
 
 import java.util.Optional;
 

@@ -1,0 +1,64 @@
+package com.example.orchestrator.service.infrastructure.saga;
+
+import com.example.orchestrator.service.infrastructure.config.logs.OrchestratorLogger;
+import com.example.orchestrator.service.infrastructure.config.logs.TopicLogger;
+import com.example.orchestrator.service.infrastructure.dto.event.EventDTO;
+import com.example.orchestrator.service.infrastructure.rest.api.producer.ProducerTopic;
+import com.example.orchestrator.service.infrastructure.rest.api.publisher.EventPublisher;
+import com.example.orchestrator.service.infrastructure.saga.usecases.SagaResolver;
+import com.example.orchestrator.service.infrastructure.shared.JsonSerializer;
+
+import static com.example.orchestrator.service.infrastructure.shared.constants.Source.ORCHESTRATOR;
+import static com.example.orchestrator.service.infrastructure.shared.constants.Status.FAIL;
+import static com.example.orchestrator.service.infrastructure.shared.constants.Status.SUCCESS;
+import static com.example.orchestrator.service.infrastructure.shared.constants.Topic.*;
+
+
+public class SagaResolverImpl implements SagaResolver {
+
+    private final TopicResolver sagaTopic;
+    private final TopicLogger topicLogger;
+    private final OrchestratorLogger orchestratorLogger;
+    private final EventPublisher publisher;
+
+    public SagaResolverImpl(TopicResolver sagaTopic, ProducerTopic producerTopic, JsonSerializer serializer, TopicLogger topicLogger, OrchestratorLogger orchestratorLogger, EventPublisher publisher) {
+        this.sagaTopic = sagaTopic;
+        this.topicLogger = topicLogger;
+        this.orchestratorLogger = orchestratorLogger;
+        this.publisher = publisher;
+    }
+
+    @Override
+    public void onStart(EventDTO event) throws Exception {
+        event.setSourceAndStatus(ORCHESTRATOR, SUCCESS);
+        event.addHistory("Saga started");
+
+        topicLogger.log(event, sagaTopic.nextTopic(event));
+        orchestratorLogger.log(event, START_SAGA);
+        publisher.publish(event, sagaTopic.nextTopic(event).getTopic());
+    }
+
+    @Override
+    public void onContinue(EventDTO event) throws Exception {
+        orchestratorLogger.log(event, CONTINUE_SAGA);
+        publisher.publish(event, sagaTopic.nextTopic(event).getTopic());
+    }
+
+    @Override
+    public void finishSuccess(EventDTO event) throws Exception {
+        event.setSourceAndStatus(ORCHESTRATOR, SUCCESS);
+        event.addHistory("Saga finished successfully!");
+
+        orchestratorLogger.log(event, FINISH_SUCCESS);
+        publisher.publish(event, NOTIFY_ENDING.getTopic());
+    }
+
+    @Override
+    public void finishFail(EventDTO event) throws Exception {
+        event.setSourceAndStatus(ORCHESTRATOR, FAIL);
+        event.addHistory("Saga finished with errors!");
+
+        orchestratorLogger.log(event, FINISH_FAIL);
+        publisher.publish(event, NOTIFY_ENDING.getTopic());
+    }
+}

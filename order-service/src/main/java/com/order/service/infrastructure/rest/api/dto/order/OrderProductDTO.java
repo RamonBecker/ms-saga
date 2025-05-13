@@ -1,7 +1,7 @@
 package com.order.service.infrastructure.rest.api.dto.order;
 
 
-import com.order.service.core.domain.OrderProduct;
+import com.order.service.core.domain.order.OrderProduct;
 import com.order.service.infrastructure.rest.api.dto.product.ProductDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

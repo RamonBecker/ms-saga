@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 public class KafkaProperties {
 
     private final Consumer consumer = new Consumer();
+    private final Topic topic = new Topic();
+
 
     @Getter
     @Setter
@@ -27,7 +29,33 @@ public class KafkaProperties {
         private String autoOffsetReset;
 
     }
+
+    public static class Topic {
+
+        @Getter
+        @Setter
+        private String startSaga;
+
+        @Getter
+        @Setter
+        private String finishSuccess;
+
+        @Getter
+        @Setter
+        private String finishFail;
+
+        @Getter
+        @Setter
+        private String orchestrator;
+
+    }
+
     public Consumer getConsumer() {
         return consumer;
     }
+
+    public Topic getTopic() {
+        return topic;
+    }
+
 }

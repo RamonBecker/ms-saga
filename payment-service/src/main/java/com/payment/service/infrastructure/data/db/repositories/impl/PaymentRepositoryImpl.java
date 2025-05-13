@@ -1,6 +1,6 @@
 package com.payment.service.infrastructure.data.db.repositories.impl;
 
-import com.payment.service.core.domain.Payment;
+import com.payment.service.core.domain.payment.Payment;
 import com.payment.service.core.ports.PaymentRepositoryPort;
 import com.payment.service.core.usecases.payment.exception.PaymentNotFoundException;
 import com.payment.service.infrastructure.data.db.entities.PaymentEntity;

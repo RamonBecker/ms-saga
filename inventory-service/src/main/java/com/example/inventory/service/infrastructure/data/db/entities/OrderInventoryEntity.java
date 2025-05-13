@@ -1,8 +1,7 @@
 package com.example.inventory.service.infrastructure.data.db.entities;
 
 
-import com.example.inventory.service.core.domain.Order;
-import com.example.inventory.service.core.domain.OrderInventory;
+import com.example.inventory.service.core.domain.inventory.OrderInventory;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

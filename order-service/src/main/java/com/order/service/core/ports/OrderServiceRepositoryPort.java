@@ -1,6 +1,6 @@
 package com.order.service.core.ports;
 
-import com.order.service.core.domain.Order;
+import com.order.service.core.domain.order.Order;
 
 public interface OrderServiceRepositoryPort {
 

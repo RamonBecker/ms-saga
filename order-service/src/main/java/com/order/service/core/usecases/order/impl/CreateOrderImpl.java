@@ -1,6 +1,6 @@
 package com.order.service.core.usecases.order.impl;
 
-import com.order.service.core.domain.Order;
+import com.order.service.core.domain.order.Order;
 import com.order.service.core.ports.OrderServiceRepositoryPort;
 import com.order.service.core.usecases.order.CreateOrder;
 import lombok.AllArgsConstructor;

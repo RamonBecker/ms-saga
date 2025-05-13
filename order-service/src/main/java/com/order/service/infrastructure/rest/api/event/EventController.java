@@ -37,7 +37,7 @@ public class EventController {
     }
 
     @GetMapping
-    public ResponseEntity<List<EventDTO>> getTransactionOrOrder(EventFilterDTO filter) {
+    public ResponseEntity<List<EventDTO>> getByTransactionOrOrder(EventFilterDTO filter) {
         if (!isEmpty(filter.getOrderId()))
             return ResponseEntity.status(OK).body(getEventByTransactionId.execute(filter.getOrderId()).stream().map(EventDTO::from).toList());
 

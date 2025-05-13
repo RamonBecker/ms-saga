@@ -1,6 +1,6 @@
 package com.example.inventory.service.core.ports;
 
-import com.example.inventory.service.core.domain.Inventory;
+import com.example.inventory.service.core.domain.inventory.Inventory;
 
 import java.util.Optional;
 

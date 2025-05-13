@@ -34,8 +34,7 @@ public class KafkaProperties {
 
         @Getter
         @Setter
-
-        private String productValidationStart;
+        private String startSaga;
 
         @Getter
         @Setter

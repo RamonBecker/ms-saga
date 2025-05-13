@@ -1,7 +1,7 @@
 package com.order.service.infrastructure.data.db.entities;
 
-import com.order.service.core.domain.Order;
-import com.order.service.core.domain.OrderProduct;
+import com.order.service.core.domain.order.Order;
+import com.order.service.core.domain.order.OrderProduct;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

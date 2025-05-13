@@ -1,14 +1,20 @@
 package com.example.inventory.service.infrastructure.rest.api.consumer;
 
 
+import com.example.inventory.service.core.domain.event.Event;
 import com.example.inventory.service.infrastructure.dto.EventDTO;
-import com.example.inventory.service.infrastructure.rest.api.inventory.SendInventory;
+import com.example.inventory.service.infrastructure.rest.api.consumer.usecases.ConsumeEventHandler;
 import com.example.inventory.service.infrastructure.serializers.JsonSerializer;
-import com.fasterxml.jackson.core.JsonProcessingException;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
+
+import com.example.inventory.service.infrastructure.shared.constants.Status;
+
+
+import static com.example.inventory.service.infrastructure.shared.constants.Status.SUCCESS;
+import static com.example.inventory.service.infrastructure.shared.constants.Status.FAIL;
 
 
 @Slf4j
@@ -16,41 +22,39 @@ import org.springframework.stereotype.Component;
 public class ConsumerTopic {
 
     private final JsonSerializer jsonSerializer;
-    private final SendInventory sendInventory;
+    private final ConsumeEventHandler handler;
 
-    public ConsumerTopic(JsonSerializer jsonSerializer, SendInventory sendInventory) {
+    public ConsumerTopic(JsonSerializer jsonSerializer, ConsumeEventHandler handler) {
         this.jsonSerializer = jsonSerializer;
-        this.sendInventory = sendInventory;
+        this.handler = handler;
     }
 
     @KafkaListener(
             groupId = "${spring.kafka.consumer.group-id}",
             topics = "${spring.kafka.topic.inventory-success}"
     )
-    public void consumeSuccessEvent(String payload) throws Exception {
-
-        log.info("Received success event {} from inventory-success topic ", payload);
-
-        var event = jsonSerializer.fromJson(payload, EventDTO.class);
-
-        log.info(event.toString());
-
-        sendInventory.success(event);
+    public void onSuccess(String payload) throws Exception {
+        handle(payload, SUCCESS);
     }
 
     @KafkaListener(
             groupId = "${spring.kafka.consumer.group-id}",
             topics = "${spring.kafka.topic.inventory-fail}"
     )
-    public void consumeFailEvent(String payload) throws Exception {
+    public void onFail(String payload) throws Exception {
+        handle(payload, FAIL);
+    }
 
-        log.info("Received rollback event {} from inventory-fail topic ", payload);
+    private void handle(String payload, Status status) throws Exception {
 
-        var event = jsonSerializer.fromJson(payload, EventDTO.class);
 
-        log.info(event.toString());
+        log.info("Received {} event {} from inventory topic ", status, payload);
 
-        sendInventory.rollback(event);
+        var dto = jsonSerializer.fromJson(payload, EventDTO.class);
+        var event = Event.fromDomain(dto);
+
+        handler.handle(status, event);
+
     }
 
 }

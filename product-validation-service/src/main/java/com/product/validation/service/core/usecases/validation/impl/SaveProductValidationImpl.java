@@ -1,8 +1,8 @@
 package com.product.validation.service.core.usecases.validation.impl;
 
-import com.product.validation.service.core.domain.Event;
-import com.product.validation.service.core.domain.Product;
-import com.product.validation.service.core.domain.ProductValidation;
+import com.product.validation.service.core.domain.event.Event;
+import com.product.validation.service.core.domain.product.Product;
+import com.product.validation.service.core.domain.product.ProductValidation;
 import com.product.validation.service.core.ports.ProductRepositoryPort;
 import com.product.validation.service.core.ports.ProductValidationRepositoryPort;
 import com.product.validation.service.core.usecases.product.exception.ProductValidationException;

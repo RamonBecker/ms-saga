@@ -1,7 +1,7 @@
 package com.example.inventory.service.core.usecases.orderInventory.impl;
 
-import com.example.inventory.service.core.domain.Event;
-import com.example.inventory.service.core.domain.OrderInventory;
+import com.example.inventory.service.core.domain.event.Event;
+import com.example.inventory.service.core.domain.inventory.OrderInventory;
 import com.example.inventory.service.core.ports.InventoryRepositoryPort;
 import com.example.inventory.service.core.ports.OrderInventoryRepositoryPort;
 import com.example.inventory.service.core.usecases.inventory.exception.NotFoundInventoryException;

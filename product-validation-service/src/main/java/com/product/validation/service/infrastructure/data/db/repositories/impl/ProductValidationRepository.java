@@ -1,14 +1,13 @@
 package com.product.validation.service.infrastructure.data.db.repositories.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.product.validation.service.core.domain.Event;
-import com.product.validation.service.core.domain.ProductValidation;
+import com.product.validation.service.core.domain.event.Event;
+import com.product.validation.service.core.domain.product.ProductValidation;
 import com.product.validation.service.core.ports.ProductValidationRepositoryPort;
 import com.product.validation.service.infrastructure.data.db.entities.ProductValidationEntity;
-import com.product.validation.service.infrastructure.data.db.repositories.JpaProductRepository;
 import com.product.validation.service.infrastructure.data.db.repositories.JpaProductValidationRepository;
 import com.product.validation.service.infrastructure.rest.api.producer.ProducerTopic;
-import com.product.validation.service.infrastructure.shared.JsonSerializer;
+import com.product.validation.service.infrastructure.rest.api.serializers.JsonSerializer;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,6 +1,6 @@
 package com.example.inventory.service.core.usecases.inventory;
 
-import com.example.inventory.service.core.domain.Order;
+import com.example.inventory.service.core.domain.order.Order;
 
 public interface SaveInventory {
 

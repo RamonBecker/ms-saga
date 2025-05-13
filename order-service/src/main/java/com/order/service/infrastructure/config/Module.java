@@ -5,16 +5,18 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.order.service.core.usecases.event.impl.GetAllEventImpl;
 import com.order.service.core.usecases.event.impl.GetEventByOrderImpl;
 import com.order.service.core.usecases.event.impl.GetEventByTransactionImpl;
+import com.order.service.core.usecases.notify.NotifyEnd;
+import com.order.service.core.usecases.notify.impl.NotifyEndImpl;
 import com.order.service.core.usecases.order.impl.CreateOrderImpl;
 import com.order.service.infrastructure.config.kafka.KafkaProperties;
 import com.order.service.infrastructure.data.db.repositories.MongoEventRepository;
 import com.order.service.infrastructure.data.db.repositories.MongoOrderRepository;
 import com.order.service.infrastructure.data.db.repositories.impl.EventRepository;
 import com.order.service.infrastructure.data.db.repositories.impl.OrderRepository;
-import com.order.service.infrastructure.rest.api.consumer.EventConsumer;
-import com.order.service.infrastructure.rest.api.producer.SagaProducer;
-import com.order.service.infrastructure.rest.api.serializers.JsonSerializerImpl;
-import com.order.service.infrastructure.shared.JsonSerializer;
+import com.order.service.infrastructure.rest.api.consumer.ConsumerTopic;
+import com.order.service.infrastructure.rest.api.producer.ProducerTopic;
+import com.order.service.infrastructure.rest.api.serializers.impl.JsonSerializerImpl;
+import com.order.service.infrastructure.rest.api.serializers.JsonSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -52,8 +54,8 @@ public class Module {
     }
 
     @Bean
-    public SagaProducer createSagaProducer() {
-        return new SagaProducer(kafkaTemplate, kafkaProperties);
+    public ProducerTopic createSagaProducer() {
+        return new ProducerTopic(kafkaTemplate, kafkaProperties);
     }
 
     @Bean
@@ -61,6 +63,10 @@ public class Module {
         return new OrderRepository(orderRepository, createJsonSerializer(), createSagaProducer(), createEventRepository());
     }
 
+    @Bean
+    public NotifyEnd createNotifyEnd() {
+        return new NotifyEndImpl(createEventRepository());
+    }
 
     @Bean
     public EventRepository createEventRepository() {
@@ -88,7 +94,7 @@ public class Module {
     }
 
     @Bean
-    public EventConsumer createEventConsumer() {
-        return new EventConsumer(createJsonSerializer(), createEventRepository());
+    public ConsumerTopic createEventConsumer() {
+        return new ConsumerTopic(createJsonSerializer(), createNotifyEnd());
     }
 }

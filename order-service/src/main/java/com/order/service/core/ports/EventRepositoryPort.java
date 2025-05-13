@@ -1,6 +1,6 @@
 package com.order.service.core.ports;
 
-import com.order.service.core.domain.Event;
+import com.order.service.core.domain.event.Event;
 
 import java.util.List;
 import java.util.Optional;

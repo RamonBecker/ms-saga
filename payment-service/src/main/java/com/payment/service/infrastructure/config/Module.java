@@ -14,11 +14,14 @@ import com.payment.service.core.usecases.payment.impl.UpdatePaymentStatusImpl;
 import com.payment.service.infrastructure.config.kafka.KafkaProperties;
 import com.payment.service.infrastructure.data.db.repositories.JpaPaymentRepository;
 import com.payment.service.infrastructure.data.db.repositories.impl.PaymentRepositoryImpl;
+import com.payment.service.infrastructure.rest.api.consumer.impl.ConsumeEventHandlerImpl;
 import com.payment.service.infrastructure.rest.api.consumer.ConsumerTopic;
-import com.payment.service.infrastructure.rest.api.payment.SendPayment;
+import com.payment.service.infrastructure.rest.api.consumer.usecases.ConsumeEventHandler;
+import com.payment.service.infrastructure.rest.api.payment.PaymentResolver;
 import com.payment.service.infrastructure.rest.api.producer.ProducerTopic;
-import com.payment.service.infrastructure.serializers.JsonSerializerImpl;
-import com.payment.service.infrastructure.shared.JsonSerializer;
+import com.payment.service.infrastructure.rest.api.publisher.EventPublisher;
+import com.payment.service.infrastructure.serializers.impl.JsonSerializerImpl;
+import com.payment.service.infrastructure.serializers.JsonSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -62,8 +65,18 @@ public class Module {
     }
 
     @Bean
+    public ConsumeEventHandler createConsumeEventHandler() {
+        return new ConsumeEventHandlerImpl(createPaymentResolver());
+    }
+
+    @Bean
+    public EventPublisher createEventPublisher() {
+        return new EventPublisher(createJsonSerializer(), createProducerTopic());
+    }
+
+    @Bean
     public ConsumerTopic createConsumerTopic() {
-        return new ConsumerTopic(createJsonSerializer(), createSendPayment());
+        return new ConsumerTopic(createJsonSerializer(), createConsumeEventHandler());
     }
 
     @Bean
@@ -87,7 +100,7 @@ public class Module {
     }
 
     @Bean
-    public SendPayment createSendPayment() {
-        return new SendPayment(createSavePayment(), createUpdatePaymentStatus(), createGetPaymentByOrderAndTransaction(), createJsonSerializer(), createProducerTopic());
+    public PaymentResolver createPaymentResolver() {
+        return new PaymentResolver(createSavePayment(), createUpdatePaymentStatus(), createGetPaymentByOrderAndTransaction(), createEventPublisher());
     }
 }

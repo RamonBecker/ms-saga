@@ -73,7 +73,7 @@ public class KafkaConfig {
 
     @Bean
     public NewTopic createSagaTopic() {
-        return builderTopic(kafkaProperties.getTopic().getProductValidationStart());
+        return builderTopic(kafkaProperties.getTopic().getStartSaga());
     }
 
     @Bean

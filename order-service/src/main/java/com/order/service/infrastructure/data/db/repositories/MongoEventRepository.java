@@ -2,6 +2,7 @@ package com.order.service.infrastructure.data.db.repositories;
 
 import com.order.service.infrastructure.data.db.entities.EventEntity;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 import java.util.List;
 import java.util.Optional;

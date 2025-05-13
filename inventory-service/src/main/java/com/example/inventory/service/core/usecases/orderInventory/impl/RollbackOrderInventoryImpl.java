@@ -1,6 +1,6 @@
 package com.example.inventory.service.core.usecases.orderInventory.impl;
 
-import com.example.inventory.service.core.domain.Order;
+import com.example.inventory.service.core.domain.order.Order;
 import com.example.inventory.service.core.ports.InventoryRepositoryPort;
 import com.example.inventory.service.core.ports.OrderInventoryRepositoryPort;
 import com.example.inventory.service.core.usecases.orderInventory.RollbackOrderInventory;

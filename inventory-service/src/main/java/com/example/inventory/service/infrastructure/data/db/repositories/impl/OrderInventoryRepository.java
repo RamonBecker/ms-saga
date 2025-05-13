@@ -1,6 +1,6 @@
 package com.example.inventory.service.infrastructure.data.db.repositories.impl;
 
-import com.example.inventory.service.core.domain.OrderInventory;
+import com.example.inventory.service.core.domain.inventory.OrderInventory;
 import com.example.inventory.service.core.ports.OrderInventoryRepositoryPort;
 import com.example.inventory.service.infrastructure.data.db.entities.OrderInventoryEntity;
 import com.example.inventory.service.infrastructure.data.db.repositories.JpaOrderInventoryRepository;

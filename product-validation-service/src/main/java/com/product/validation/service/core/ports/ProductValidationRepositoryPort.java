@@ -1,8 +1,7 @@
 package com.product.validation.service.core.ports;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.product.validation.service.core.domain.Event;
-import com.product.validation.service.core.domain.ProductValidation;
+import com.product.validation.service.core.domain.event.Event;
+import com.product.validation.service.core.domain.product.ProductValidation;
 
 import java.util.Optional;
 

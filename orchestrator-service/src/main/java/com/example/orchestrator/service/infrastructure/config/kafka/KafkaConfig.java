@@ -1,7 +1,6 @@
 package com.example.orchestrator.service.infrastructure.config.kafka;
 
 
-import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -16,16 +15,16 @@ import org.springframework.kafka.core.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.example.orchestrator.service.infrastructure.shared.constants.Topics.PAYMENT_FAIL;
-import static com.example.orchestrator.service.infrastructure.shared.constants.Topics.PAYMENT_SUCCESS;
-import static com.example.orchestrator.service.infrastructure.shared.constants.Topics.INVENTORY_SUCCESS;
-import static com.example.orchestrator.service.infrastructure.shared.constants.Topics.INVENTORY_FAIL;
-import static com.example.orchestrator.service.infrastructure.shared.constants.Topics.PRODUCT_VALIDATION_FAIL;
-import static com.example.orchestrator.service.infrastructure.shared.constants.Topics.PRODUCT_VALIDATION_SUCCESS;
-import static com.example.orchestrator.service.infrastructure.shared.constants.Topics.START_SAGA;
-import static com.example.orchestrator.service.infrastructure.shared.constants.Topics.BASE_ORCHESTRATOR;
-import static com.example.orchestrator.service.infrastructure.shared.constants.Topics.FINISH_SUCCESS;
-import static com.example.orchestrator.service.infrastructure.shared.constants.Topics.FINISH_FAIL;
+import static com.example.orchestrator.service.infrastructure.shared.constants.Topic.PAYMENT_FAIL;
+import static com.example.orchestrator.service.infrastructure.shared.constants.Topic.PAYMENT_SUCCESS;
+import static com.example.orchestrator.service.infrastructure.shared.constants.Topic.INVENTORY_SUCCESS;
+import static com.example.orchestrator.service.infrastructure.shared.constants.Topic.INVENTORY_FAIL;
+import static com.example.orchestrator.service.infrastructure.shared.constants.Topic.PRODUCT_VALIDATION_FAIL;
+import static com.example.orchestrator.service.infrastructure.shared.constants.Topic.PRODUCT_VALIDATION_SUCCESS;
+import static com.example.orchestrator.service.infrastructure.shared.constants.Topic.START_SAGA;
+import static com.example.orchestrator.service.infrastructure.shared.constants.Topic.BASE_ORCHESTRATOR;
+import static com.example.orchestrator.service.infrastructure.shared.constants.Topic.FINISH_SUCCESS;
+import static com.example.orchestrator.service.infrastructure.shared.constants.Topic.FINISH_FAIL;
 
 
 @EnableKafka

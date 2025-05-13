@@ -1,7 +1,7 @@
 package com.order.service.infrastructure.rest.api.dto.event;
 
-import com.order.service.core.domain.Event;
-import com.order.service.core.domain.EventHistory;
+import com.order.service.core.domain.event.Event;
+import com.order.service.core.domain.event.EventHistory;
 import com.order.service.infrastructure.rest.api.dto.order.OrderDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,13 +1,13 @@
 package com.order.service.infrastructure.data.db.repositories.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.order.service.core.domain.Event;
-import com.order.service.core.domain.Order;
+import com.order.service.core.domain.event.Event;
+import com.order.service.core.domain.order.Order;
 import com.order.service.core.ports.OrderServiceRepositoryPort;
 import com.order.service.infrastructure.data.db.entities.OrderEntity;
 import com.order.service.infrastructure.data.db.repositories.MongoOrderRepository;
-import com.order.service.infrastructure.rest.api.producer.SagaProducer;
-import com.order.service.infrastructure.shared.JsonSerializer;
+import com.order.service.infrastructure.rest.api.producer.ProducerTopic;
+import com.order.service.infrastructure.rest.api.serializers.JsonSerializer;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -18,7 +18,7 @@ public class OrderRepository implements OrderServiceRepositoryPort {
 
     private MongoOrderRepository repository;
     private JsonSerializer jsonSerializer;
-    private SagaProducer producer;
+    private ProducerTopic producer;
     private EventRepository service;
 
     @Override

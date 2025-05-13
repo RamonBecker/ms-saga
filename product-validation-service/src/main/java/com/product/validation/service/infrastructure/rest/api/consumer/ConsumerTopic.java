@@ -1,10 +1,11 @@
 package com.product.validation.service.infrastructure.rest.api.consumer;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.product.validation.service.core.domain.event.Event;
 import com.product.validation.service.infrastructure.dto.event.EventDTO;
-import com.product.validation.service.infrastructure.rest.api.product.SendProduct;
-import com.product.validation.service.infrastructure.shared.JsonSerializer;
+import com.product.validation.service.infrastructure.rest.api.consumer.usecases.ConsumeEventHandler;
+import com.product.validation.service.infrastructure.rest.api.serializers.JsonSerializer;
+import com.product.validation.service.infrastructure.shared.constants.Status;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
@@ -14,42 +15,36 @@ import org.springframework.stereotype.Component;
 @Component
 public class ConsumerTopic {
 
-
     private final JsonSerializer serializer;
-    private final SendProduct send;
+    private final ConsumeEventHandler handler;
 
-    public ConsumerTopic(JsonSerializer jsonSerializer, SendProduct send) {
+    public ConsumerTopic(JsonSerializer jsonSerializer, ConsumeEventHandler handler) {
         this.serializer = jsonSerializer;
-        this.send = send;
+        this.handler = handler;
     }
 
     @KafkaListener(
             groupId = "${spring.kafka.consumer.group-id}",
             topics = "${spring.kafka.topic.product-validation-success}"
     )
-    public void consumeSuccessEvent(String payload) throws JsonProcessingException {
-        log.info("Received success event {} from product-validation-success topic ", payload);
-
-        var event = serializer.fromJson(payload, EventDTO.class);
-
-        log.info(event.toString());
-
-        send.success(event);
+    public void onSuccess(String payload) throws Exception {
+        handle(Status.SUCCESS, payload);
     }
 
     @KafkaListener(
             groupId = "${spring.kafka.consumer.group-id}",
             topics = "${spring.kafka.topic.product-validation-fail}"
     )
-    public void consumeFailEvent(String payload) throws JsonProcessingException {
-        log.info("Received rollback event {} from product-validation-fail topic ", payload);
-
-        var event = serializer.fromJson(payload, EventDTO.class);
-
-        log.info(event.toString());
-
-        send.rollback(event);
-
+    public void onFail(String payload) throws Exception {
+        handle(Status.FAIL, payload);
     }
 
+    private void handle(Status status, String payload) throws Exception {
+
+        var dto = serializer.fromJson(payload, EventDTO.class);
+        var event = Event.fromDomain(dto);
+
+        log.info("Received {} event {} from product-validation-fail topic: ", status, payload);
+        handler.handle(status, event);
+    }
 }

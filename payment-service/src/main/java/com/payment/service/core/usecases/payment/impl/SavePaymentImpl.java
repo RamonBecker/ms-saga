@@ -1,7 +1,7 @@
 package com.payment.service.core.usecases.payment.impl;
 
-import com.payment.service.core.domain.Event;
-import com.payment.service.core.domain.Payment;
+import com.payment.service.core.domain.event.Event;
+import com.payment.service.core.domain.payment.Payment;
 import com.payment.service.core.ports.PaymentRepositoryPort;
 import com.payment.service.core.usecases.payment.SavePayment;
 import com.payment.service.core.usecases.payment.exception.AmountValidationException;

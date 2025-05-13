@@ -1,6 +1,6 @@
 package com.product.validation.service.core.usecases.validation.impl;
 
-import com.product.validation.service.core.domain.Event;
+import com.product.validation.service.core.domain.event.Event;
 import com.product.validation.service.core.ports.ProductValidationRepositoryPort;
 import com.product.validation.service.core.usecases.validation.UpdateProductValidation;
 import lombok.AllArgsConstructor;

@@ -1,7 +1,6 @@
 package com.product.validation.service.infrastructure.data.db.entities;
 
-import com.product.validation.service.core.domain.Product;
-import com.product.validation.service.core.domain.ProductValidation;
+import com.product.validation.service.core.domain.product.ProductValidation;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

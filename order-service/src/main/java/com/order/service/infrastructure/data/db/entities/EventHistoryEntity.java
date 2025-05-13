@@ -1,8 +1,7 @@
 package com.order.service.infrastructure.data.db.entities;
 
 
-import com.order.service.core.domain.EventHistory;
-import com.order.service.infrastructure.shared.constants.SagaStatus;
+import com.order.service.core.domain.event.EventHistory;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,7 +16,7 @@ import java.time.LocalDateTime;
 public class EventHistoryEntity {
 
     private String source;
-    private SagaStatus status;
+    private String status;
     private String message;
     private LocalDateTime createdAt;
 
