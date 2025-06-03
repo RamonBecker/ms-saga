@@ -63,6 +63,106 @@ The architecture is composed of 5 microservices:
 
 ---
 
+## ▶️ Orchestrated Saga Flow (Success Scenario)
+
+> Represents the full flow when all steps in the transaction are completed successfully:
+
+1. Order is created
+2. Payment is authorized
+3. Inventory is updated
+
+📌 `docs/saga-success.png`
+
+## ❌  Rollback Flow (Failure Scenario)
+
+> Represents the compensating flow when a failure occurs at any step in the process, forcing the orchestrator to undo previous actions.
+
+---
+## Deployment Instructions
+
+### :rocket: Installation
+
+![](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
+
+
+```
+git clone https://github.com/RamonBecker/ms-saga.git
+```
+
+![](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
+```
+git clone https://github.com/RamonBecker/ms-saga.git
+or install github https://desktop.github.com/ 
+```
+
+## 🔨 Docker
+
+Before cloning the project, you will need to install docker on your operating system.
+
+For windows, enter the following from the link:
+
+```
+https://docs.docker.com/desktop/windows/install/
+```
+
+For linux, follow the procedure below:
+- Update your existing list of packages:
+
+```
+sudo apt update
+```
+
+- Install some prerequisite packages that let apt use packages over HTTPS:
+
+```
+sudo apt install apt-transport-https ca-certificates curl software-properties-common
+
+```
+
+- Add the GPG key to the official Docker repository on your system:
+
+```
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+```
+- Add the Docker repository to the APT sources:
+
+```
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+
+```
+
+- Update the package database with Docker packages from the newly added repository:
+
+```
+sudo apt update
+```
+
+- Make sure you are about to install from the Docker repository instead of the default Ubuntu repository:
+
+```
+apt-cache policy docker-ce
+```
+
+- Install Docker:
+
+```
+sudo apt install docker-ce
+```
+
+- Check if it is working:
+
+```
+sudo systemctl status docker
+```
+
+- Once you have completed the docker installation, go to the infrastructure folder and run the following commands
+
+```
+docker compose up --build
+docker compose up -d
+```
+
+
 ## 🔄 Features Implemented
 
 - Asynchronous processing of **distributed transactions**
@@ -86,6 +186,116 @@ Kafka is used to:
 - Control rollback flows in failure scenarios
 
 Kafka provides **high performance**, **fault tolerance**, **partitioning**, and **event persistence**, making it ideal for event-driven architectures.
+
+
+
+
+---
+
+## 📌 Adopted Patterns
+
+* **Orchestrated Saga**: centralized transaction coordination
+* **Event-Driven Architecture (EDA)**: asynchronous service communication
+* **Outbox Pattern** (planned): persistent and reliable event storage
+* **Idempotency**: ensures operations are not duplicated
+
+---
+
+## 📨 Example: Order API Payload & Response
+
+To better understand how the system works in practice, here is an example of a request and response for creating a new order via the Order API.
+
+### ✅ Request Payload
+
+```json
+{
+  "products": [
+    {
+      "product": {
+        "code": "COMIC_BOOKS",
+        "unitValue": 15.50
+      },
+      "quantity": 3
+    },
+    {
+      "product": {
+        "code": "BOOKS",
+        "unitValue": 9.90
+      },
+      "quantity": 1
+    }
+  ]
+}
+```
+
+### 📬 Response Example
+
+```json
+{
+  "id": "64429e987a8b646915b3735f",
+  "products": [
+    {
+      "product": {
+        "code": "COMIC_BOOKS",
+        "unitValue": 15.5
+      },
+      "quantity": 3
+    },
+    {
+      "product": {
+        "code": "BOOKS",
+        "unitValue": 9.9
+      },
+      "quantity": 1
+    }
+  ],
+  "createdAt": "2025-04-21T14:32:56.335943085",
+  "transactionId": "1682087576536_99d2ca6c-f074-41a6-92e0-21700148b519"
+}
+```
+
+This response includes:
+
+* `id`: Unique identifier of the order stored in MongoDB.
+* `createdAt`: Timestamp when the order was created.
+* `transactionId`: Identifier used to track the distributed transaction across services (helps with idempotency and rollback).
+
+This response confirms the order has been successfully created and that the orchestrator will manage the subsequent steps in the saga:
+
+1. Validate and process payment
+2. Reserve or update inventory
+3. Finalize or rollback depending on success or failure
+
+---
+
+## 🚪 Application Ports
+
+The applications run on the following ports:
+
+* `Order-Service`: 3000
+* `Orchestrator-Service`: 8080
+* `Product-Validation-Service`: 8090
+* `Payment-Service`: 8091
+* `Inventory-Service`: 8092
+* `Apache Kafka`: 9092
+* `Redpanda Console`: 8081
+* `PostgreSQL (Product-DB)`: 5432
+* `PostgreSQL (Payment-DB)`: 5433
+* `PostgreSQL (Inventory-DB)`: 5434
+* `MongoDB (Order-DB)`: 27017
+
+---
+
+## 🔍 Saga Inspection Endpoint
+
+It is possible to retrieve saga data using either the `orderId` or the `transactionId`. Both queries return the same result.
+
+### Example:
+
+```http
+GET http://localhost:3000/api/event?orderId=64429e987a8b646915b3735f
+GET http://localhost:3000/api/event?transactionId=1682087576536_99d2ca6c-f074-41a6-92e0-21700148b519
+```
 
 ---
 ## :technologist:	 Author
